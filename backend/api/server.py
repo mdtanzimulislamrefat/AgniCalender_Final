@@ -13,7 +13,7 @@ from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse
 import uvicorn
 
-from backend.api import account, archive, auth, hotspots
+from backend.api import account, archive, auth, harmonized, hotspots
 from backend.api.database import Connection, close_pool, enable_pool, get_connection  # noqa: F401 - tests override get_connection
 from backend.api.models import Calendar, ObservationPage, Summary
 from backend.api.params import BBox, parse_bbox
@@ -42,12 +42,15 @@ async def lifespan(app):
 
 
 app = FastAPI(title='AgniCalendar API', version='1.0.0', lifespan=lifespan,
-              description='NASA FIRMS sensor-specific observations. No fire prediction or calibrated harmonization. '
-                          'Data endpoints require a bearer access token from /v1/auth/login.')
+              description='NASA FIRMS observations with a harmonized MODIS + VIIRS burning '
+                          'activity calendar (same-day, 1 km deduplication into fire events; '
+                          'FRP reported per sensor, never summed across sensors). No fire '
+                          'prediction. Data endpoints require a bearer access token from /v1/auth/login.')
 app.state.scheduler = None  # main() installs the NASA fetch scheduler
 app.include_router(auth.router)
 app.include_router(account.router)
 app.include_router(archive.router)
+app.include_router(harmonized.router)
 app.include_router(hotspots.router)
 app.add_middleware(GZipMiddleware, minimum_size=2000)  # month maps can be several MB of JSON
 

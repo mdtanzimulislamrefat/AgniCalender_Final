@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgniCalendar — 7-slide demo (Space Apps 2026)</title>
+<style>
+  *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#111;color:#1f1a17}
+  .slide{width:100%;min-height:100vh;background:#fff8f0;padding:48px 56px;display:flex;flex-direction:column;justify-content:center;border-bottom:8px solid #c2410c}
+  .kicker{color:#c2410c;font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:14px}
+  h1{font-size:52px;line-height:1.05;margin:10px 0} h2{font-size:40px;line-height:1.1;margin:8px 0 14px}
+  p,li{font-size:22px;line-height:1.5} .big{font-size:64px;font-weight:800;color:#c2410c;line-height:1}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px} .card{background:#fff;border:1px solid #ead9c8;border-radius:14px;padding:18px}
+  .num{font-size:44px;font-weight:800;color:#c2410c} .small{font-size:15px;color:#6b5d54}
+  .foot{margin-top:28px;font-size:14px;color:#6b5d54}
+  table{border-collapse:collapse;font-size:19px;width:100%} th,td{border:1px solid #ead9c8;padding:8px 10px;text-align:left} th{background:#fff1e6}
+  @media print{ .slide{border:0;page-break-after:always;min-height:100vh} body{background:#fff} }
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <div class="kicker">NASA Space Apps Challenge 2026 · Harmonization of MODIS and VIIRS Hot Spots</div>
+  <h1>AgniCalendar<br>One fire calendar,<br>not three sensor counts.</h1>
+  <p>A harmonized burning activity calendar for Bangladesh, 2003–2024 — from real NASA FIRMS data. No login. Open it in a browser and see it work.</p>
+  <p class="small">Team AgniCalendar · Bangladesh · Live demo: host <code>web/</code> from the repo · Code: github.com/mdtanzimulislamrefat/AgniCalender</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">1 · The problem</div>
+  <h2>Satellites watched Bangladesh burn for 20 years — but the same fire was counted 2–5 times.</h2>
+  <p>MODIS, VIIRS S-NPP and VIIRS NOAA-20 all see the same fire, at slightly different places and times, as several pixels. Counting pixels makes it look like burning explodes whenever a new satellite launches.</p>
+  <p>Fire managers need one consistent picture: <b>when does burning really peak, and is this month unusual?</b> Pixel counts cannot answer that.</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">2 · Why raw counts lie</div>
+  <h2>VIIRS reports 3× as many detections as MODIS. There are not 3× as many fires.</h2>
+  <div class="grid">
+    <div class="card"><div class="num">3.06 : 1</div><p>VIIRS : MODIS raw detections, 2003–2024. VIIRS pixels are 375 m; MODIS pixels are ~1 km. VIIRS sees smaller fires MODIS misses.</p></div>
+    <div class="card"><div class="num">2,862 → 7,411</div><p>Yearly events, 2012 → 2013, when VIIRS S-NPP arrived. Mostly new sensitivity — not proof burning tripled.</p></div>
+  </div>
+  <p>So the old AgniCalendar kept the sensors separate and said “do not compare them”. That is honest — and it is exactly what the challenge asks us to fix.</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">3 · The harmonization</div>
+  <h2>Same fire, one event.</h2>
+  <ul>
+    <li><b>Vegetation fires only</b> (FIRMS type 0). Static land (5,336) and offshore (1,107) counted separately, never hidden.</li>
+    <li><b>Same UTC date + within 1.0 km</b> → one fire event, whatever sensor saw it. 1 km absorbs pixel / geolocation offset.</li>
+    <li><b>FRP is never summed across sensors</b> — different pixel sizes. Max / median FRP is reported per sensor.</li>
+    <li><b>Climatology only where the sensor mix matches:</b> 2019–2024, all three sensors. Earlier years get no anomaly rather than a misleading one.</li>
+  </ul>
+  <p class="small">Reproduce: <code>python -m backend.processing.harmonize --years 2003-2024 --products modis,viirs-snpp,viirs-jpss1</code> · Method: backend/data/output/HARMONIZATION_METHOD.md</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">4 · The result</div>
+  <h2>244,308 detections → 117,602 fire events.</h2>
+  <div class="grid">
+    <div class="card"><div class="num">2.08×</div><p>raw detections per harmonized event — 126,706 repeat detections merged away.</p></div>
+    <div class="card"><div class="num">4,746</div><p>events in the peak month, <b>April 2023</b> — from 18,685 raw detections.</p></div>
+    <div class="card"><div class="num">7.4%</div><p>of events were seen by more than one sensor — an independent cross-check (8,680 events).</p></div>
+    <div class="card"><div class="num">22 / 22</div><p>years whose peak month is March or April. The burning season is March–April, every year.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">5 · Critical periods — the early-warning signal</div>
+  <h2>Is this month unusual? Compare it with its own month.</h2>
+  <table><tr><th>Month</th><th>Events</th><th>Same-month average</th><th>Anomaly</th></tr>
+  <tr><td><b>Jan 2019</b></td><td>1,097</td><td>589</td><td><b>z +1.94</b></td></tr>
+  <tr><td><b>Jun 2023</b></td><td>83</td><td>39</td><td><b>z +1.80</b></td></tr>
+  <tr><td><b>Nov 2021</b></td><td>419</td><td>293</td><td><b>z +1.70</b></td></tr>
+  <tr><td><b>Apr 2023</b></td><td>4,746</td><td>3,888</td><td><b>z +1.25</b></td></tr></table>
+  <p>June 2023 looks small — 83 events — but June is normally quiet (average 39). An out-of-season spike is the signal, even when the absolute number is small. 13 critical months in 2019–2024.</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">6 · Try it · 7 · What’s next</div>
+  <h2>Open the calendar. No login, no APK.</h2>
+  <p><b>Live web demo:</b> year-by-month heatmap, raw-vs-harmonized yearly bars, critical-months table — all drawn from the computed data, in <code>web/index.html</code>.</p>
+  <p><b>Also in the repo:</b> FastAPI endpoint <code>GET /v1/harmonized/calendar</code>, Android season view, 74 passing tests (8 new harmonization tests).</p>
+  <p><b>Honest limits:</b> 2025–2026 yearly files are not published yet; 6 climatology years make “critical” a flag to check, not a verified emergency; a fire across midnight UTC is split in two.</p>
+  <p><b>Next:</b> any FIRMS country file works the same way — the same calendar for any selected area; live 24-hour harmonized events from the rolling FIRMS feeds.</p>
+  <p class="foot">Data: NASA FIRMS. AgniCalendar is not affiliated with or endorsed by NASA. · github.com/mdtanzimulislamrefat/AgniCalender</p>
+</section>
+
+</body>
+</html>

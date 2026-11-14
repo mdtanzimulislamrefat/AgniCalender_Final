@@ -69,6 +69,37 @@ Everything is stored in `archive_files` / `archive_detections`: MODIS from 2000,
 - The region is the FIRMS **country boundary**, unlike the rectangle used for the rolling feeds. The two datasets are never mixed.
 - Products stay separate. Processing versions are reported per year span (MODIS 6.2 → 2017, 6.03 2018–2022, 61.03 2023+), because averages span them.
 
+## Harmonized calendar (MODIS + VIIRS merged into fire events)
+
+The archive above keeps products separate; the harmonizer merges them. One fire
+seen by MODIS and VIIRS on the same UTC day within 1.0 km counts once, not 2–5
+times. FRP is reported as max/median *per sensor* and never summed across
+sensors (different pixel sizes). Only FIRMS type 0 (presumed vegetation fire)
+is harmonized; other types are counted separately.
+
+```bash
+python -m backend.processing.harmonize --years 2003-2024 --products modis,viirs-snpp,viirs-jpss1
+# Smaller, honest window (MODIS + VIIRS S-NPP overlap):
+python -m backend.processing.harmonize --years 2013-2024 --products modis,viirs-snpp
+```
+
+Downloads the yearly FIRMS Bangladesh files in parallel (cached by file in
+`backend/data/raw/`, resumable; `--no-download` uses only cached files) and writes
+`backend/data/output/harmonized_monthly.json` plus a compact copy for the web demo
+at `web/data/harmonized.json`. `GET /v1/harmonized/calendar` (login required)
+serves the precomputed file, or 503 with the command to run if it has not been
+computed yet. Full method, limitations and numbers:
+`backend/data/output/HARMONIZATION_METHOD.md`.
+
+Real results on the 2003–2024 archive (40 yearly files, 0 invalid rows):
+**244,308 raw detections → 117,602 harmonized events** (dedup ratio 2.08;
+VIIRS:MODIS raw ratio 3.06; 7.4% of events seen by more than one sensor).
+Peak month **2023-04 with 4,746 events**. Climatology over the 2019–2024
+all-sensor window (complete years only); most anomalous month **2019-01
+(z = +1.94, 1,097 events vs mean 589.3)**. Counts before a sensor's first full
+year are not comparable with later years — see the method note before quoting
+a trend.
+
 ## Recent days and map time windows (FIRMS MAP_KEY)
 
 The map offers **24 h** (the rolling report), **7 / 30 days** and **any archive month**. The 7/30-day windows need a free NASA FIRMS key (https://firms.modaps.eosdis.nasa.gov/api/map_key/) in `backend/.env`:
@@ -175,7 +206,9 @@ The integration suite requires CREATEDB permission. It creates and removes a uni
 ## Scientific and deployment limits
 
 - Detections are pixels/thermal anomalies, not distinct fires or burned area.
-- Keep MODIS and VIIRS separate; calibrated harmonization and predictions are not implemented.
+- MODIS and VIIRS are harmonized into fire events (same UTC day, within 1 km);
+  see `backend/data/output/HARMONIZATION_METHOD.md`. No cross-sensor FRP
+  calibration is claimed, and predictions are not implemented.
 - Missing detections do not mean no fires. Observation/cloud coverage is unknown.
 - Low-confidence records are retained with labels, not silently removed.
 - Weeks can be partial. A 24-hour sample cannot establish a seasonal baseline.

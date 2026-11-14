@@ -1,0 +1,5280 @@
+{
+  "schema_version": 1,
+  "region": "Bangladesh",
+  "timezone": "UTC",
+  "generated_at_utc": "2026-11-14T05:02:16.906077+00:00",
+  "method": {
+    "name": "Spatiotemporal deduplication into harmonized fire events",
+    "clustering": "Vegetation detections (FIRMS type 0) on the same UTC date whose centres are within 1.0 km (haversine) belong to one event, regardless of sensor (MODIS / VIIRS S-NPP / VIIRS NOAA-20).",
+    "why_1km_1day": "MODIS pixels are ~1 km and VIIRS pixels ~375 m, so the same fire is reported at slightly different centres by each sensor; 1 km absorbs that geolocation/pixel offset without merging neighbouring fires in most of Bangladesh. One UTC day matches the FIRMS daily overpass cycle and the way the archive files are organised; a fire burning across midnight is split, which is a known, stated limitation.",
+    "frp": "Max/median FRP reported per sensor within each event. FRP is never summed across sensors (different pixel sizes) or across events.",
+    "fire_types": "Only FIRMS type 0 (presumed vegetation fire) is harmonized. Types 1 (volcano), 2 (static land) and 3 (offshore) are counted separately as other_types and excluded from event counts.",
+    "climatology": "Monthly mean/std computed over complete years only, and only over years in which every requested sensor was present (the harmonization window). The current partial year is never in the mean. Anomaly z = (events - climatology mean) / sample std; critical when events > mean + 1 SD. Anomalies are reported only for months inside the harmonization window, where the sensor mix matches the baseline; earlier years get no anomaly rather than a misleading one.",
+    "median_frp": "Monthly median FRP is the median over events of each event's maximum FRP (any sensor). Per-sensor medians are of detection FRP."
+  },
+  "limitations": [
+    "Detections are thermal-anomaly pixels, not distinct fires, burned area, or fire severity.",
+    "1 km / 1 UTC day clustering is an approximation: a large fire can span several events, and two nearby fires on the same day can be merged into one.",
+    "A fire burning across midnight UTC is split into two events (one per day).",
+    "VIIRS (375 m) detects smaller/cooler fires that MODIS (1 km) misses, so harmonized counts are still a lower bound on real fire activity, and the sensor mix changes over time.",
+    "No cross-sensor FRP calibration is claimed; FRP is never summed across sensors.",
+    "Cloud cover, smoke and overpass timing create gaps; a month with no detections is not evidence of no fire.",
+    "Monthly means span FIRMS processing versions (e.g. MODIS 6.2, 6.03, 61.03), which may differ slightly in detection.",
+    "Counts before a sensor's first full year are not comparable with later years; climatology uses the harmonization window only (years with every sensor present)."
+  ],
+  "coverage": {
+    "products": {
+      "MODIS_ARCHIVE": {
+        "years": [
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "first_full_year": 2003
+      },
+      "VIIRS_NOAA20_ARCHIVE": {
+        "years": [
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "first_full_year": 2019
+      },
+      "VIIRS_SNPP_ARCHIVE": {
+        "years": [
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "first_full_year": 2013
+      }
+    },
+    "years": [
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "harmonization_window": [
+      2019,
+      2024
+    ],
+    "complete_years_for_climatology": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "current_year_excluded_from_climatology": 2026
+  },
+  "totals": {
+    "raw_detections": 244308,
+    "raw_detections_by_sensor": {
+      "MODIS": 60141,
+      "VIIRS": 184167
+    },
+    "vegetation_detections": 237865,
+    "other_types": {
+      "offshore": 1107,
+      "static_land": 5336
+    },
+    "harmonized_events": 117602,
+    "overlap_events": 8680,
+    "overlap_share": 0.074,
+    "deduplication_ratio": 2.08,
+    "detections_removed_by_dedup": 126706,
+    "viirs_modis_raw_ratio": 3.06,
+    "peak_month": "2023-04",
+    "peak_month_events": 4746
+  },
+  "monthly": [
+    {
+      "year": 2003,
+      "month": 1,
+      "year_month": "2003-01",
+      "harmonized_event_count": 20,
+      "raw_detection_count": 21,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 21,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.05,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2003,
+      "month": 2,
+      "year_month": "2003-02",
+      "harmonized_event_count": 42,
+      "raw_detection_count": 45,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 45,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.45,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2003,
+      "month": 3,
+      "year_month": "2003-03",
+      "harmonized_event_count": 1017,
+      "raw_detection_count": 1182,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1182,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 38.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2003,
+      "month": 4,
+      "year_month": "2003-04",
+      "harmonized_event_count": 1437,
+      "raw_detection_count": 1623,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1623,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 36.8,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2003,
+      "month": 5,
+      "year_month": "2003-05",
+      "harmonized_event_count": 8,
+      "raw_detection_count": 8,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 8,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 9.55,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2003,
+      "month": 6,
+      "year_month": "2003-06",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 1,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 13.9,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2003,
+      "month": 7,
+      "year_month": "2003-07",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 1,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.0,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2003,
+      "month": 8,
+      "year_month": "2003-08",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 1,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 5.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2003,
+      "month": 9,
+      "year_month": "2003-09",
+      "harmonized_event_count": 0,
+      "raw_detection_count": 0,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 0,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": null,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2003,
+      "month": 10,
+      "year_month": "2003-10",
+      "harmonized_event_count": 0,
+      "raw_detection_count": 0,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 0,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": null,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2003,
+      "month": 11,
+      "year_month": "2003-11",
+      "harmonized_event_count": 17,
+      "raw_detection_count": 17,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 17,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.0,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2003,
+      "month": 12,
+      "year_month": "2003-12",
+      "harmonized_event_count": 33,
+      "raw_detection_count": 34,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 34,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 5.9,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2004,
+      "month": 1,
+      "year_month": "2004-01",
+      "harmonized_event_count": 26,
+      "raw_detection_count": 27,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 27,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.95,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2004,
+      "month": 2,
+      "year_month": "2004-02",
+      "harmonized_event_count": 77,
+      "raw_detection_count": 82,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 82,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 9.9,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2004,
+      "month": 3,
+      "year_month": "2004-03",
+      "harmonized_event_count": 1874,
+      "raw_detection_count": 2181,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2181,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 34.35,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2004,
+      "month": 4,
+      "year_month": "2004-04",
+      "harmonized_event_count": 511,
+      "raw_detection_count": 572,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 572,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 38.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2004,
+      "month": 5,
+      "year_month": "2004-05",
+      "harmonized_event_count": 29,
+      "raw_detection_count": 35,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 35,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 13.0,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2004,
+      "month": 6,
+      "year_month": "2004-06",
+      "harmonized_event_count": 2,
+      "raw_detection_count": 2,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 26.75,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2004,
+      "month": 7,
+      "year_month": "2004-07",
+      "harmonized_event_count": 0,
+      "raw_detection_count": 0,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 0,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": null,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2004,
+      "month": 8,
+      "year_month": "2004-08",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 1,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.7,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2004,
+      "month": 9,
+      "year_month": "2004-09",
+      "harmonized_event_count": 0,
+      "raw_detection_count": 0,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 0,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": null,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2004,
+      "month": 10,
+      "year_month": "2004-10",
+      "harmonized_event_count": 0,
+      "raw_detection_count": 0,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 0,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": null,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2004,
+      "month": 11,
+      "year_month": "2004-11",
+      "harmonized_event_count": 12,
+      "raw_detection_count": 13,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 13,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.5,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2004,
+      "month": 12,
+      "year_month": "2004-12",
+      "harmonized_event_count": 7,
+      "raw_detection_count": 10,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 10,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.5,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2005,
+      "month": 1,
+      "year_month": "2005-01",
+      "harmonized_event_count": 19,
+      "raw_detection_count": 25,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 25,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.3,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2005,
+      "month": 2,
+      "year_month": "2005-02",
+      "harmonized_event_count": 82,
+      "raw_detection_count": 83,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 83,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 9.95,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2005,
+      "month": 3,
+      "year_month": "2005-03",
+      "harmonized_event_count": 725,
+      "raw_detection_count": 845,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 845,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 31.6,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2005,
+      "month": 4,
+      "year_month": "2005-04",
+      "harmonized_event_count": 2237,
+      "raw_detection_count": 2683,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2683,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 35.9,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2005,
+      "month": 5,
+      "year_month": "2005-05",
+      "harmonized_event_count": 11,
+      "raw_detection_count": 12,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 12,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 11.3,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2005,
+      "month": 6,
+      "year_month": "2005-06",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 1,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 11.7,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2005,
+      "month": 7,
+      "year_month": "2005-07",
+      "harmonized_event_count": 2,
+      "raw_detection_count": 2,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 9.1,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2005,
+      "month": 8,
+      "year_month": "2005-08",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 1,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 5.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2005,
+      "month": 9,
+      "year_month": "2005-09",
+      "harmonized_event_count": 5,
+      "raw_detection_count": 5,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 5,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 5.5,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2005,
+      "month": 10,
+      "year_month": "2005-10",
+      "harmonized_event_count": 2,
+      "raw_detection_count": 2,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.8,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2005,
+      "month": 11,
+      "year_month": "2005-11",
+      "harmonized_event_count": 37,
+      "raw_detection_count": 39,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 39,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.1,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2005,
+      "month": 12,
+      "year_month": "2005-12",
+      "harmonized_event_count": 48,
+      "raw_detection_count": 52,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 52,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.85,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2006,
+      "month": 1,
+      "year_month": "2006-01",
+      "harmonized_event_count": 43,
+      "raw_detection_count": 47,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 47,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2006,
+      "month": 2,
+      "year_month": "2006-02",
+      "harmonized_event_count": 100,
+      "raw_detection_count": 104,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 104,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 9.5,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2006,
+      "month": 3,
+      "year_month": "2006-03",
+      "harmonized_event_count": 2140,
+      "raw_detection_count": 2635,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2635,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 29.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2006,
+      "month": 4,
+      "year_month": "2006-04",
+      "harmonized_event_count": 1025,
+      "raw_detection_count": 1206,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1206,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 40.8,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2006,
+      "month": 5,
+      "year_month": "2006-05",
+      "harmonized_event_count": 20,
+      "raw_detection_count": 21,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 21,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 10.95,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2006,
+      "month": 6,
+      "year_month": "2006-06",
+      "harmonized_event_count": 2,
+      "raw_detection_count": 2,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.75,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2006,
+      "month": 7,
+      "year_month": "2006-07",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 1,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 12.2,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2006,
+      "month": 8,
+      "year_month": "2006-08",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 1,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.0,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2006,
+      "month": 9,
+      "year_month": "2006-09",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 1,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 19.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2006,
+      "month": 10,
+      "year_month": "2006-10",
+      "harmonized_event_count": 0,
+      "raw_detection_count": 0,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 0,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": null,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2006,
+      "month": 11,
+      "year_month": "2006-11",
+      "harmonized_event_count": 29,
+      "raw_detection_count": 32,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 32,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.6,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2006,
+      "month": 12,
+      "year_month": "2006-12",
+      "harmonized_event_count": 62,
+      "raw_detection_count": 63,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 63,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.55,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2007,
+      "month": 1,
+      "year_month": "2007-01",
+      "harmonized_event_count": 44,
+      "raw_detection_count": 45,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 45,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.45,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2007,
+      "month": 2,
+      "year_month": "2007-02",
+      "harmonized_event_count": 82,
+      "raw_detection_count": 89,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 89,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 11.0,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2007,
+      "month": 3,
+      "year_month": "2007-03",
+      "harmonized_event_count": 944,
+      "raw_detection_count": 1198,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1198,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 31.15,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2007,
+      "month": 4,
+      "year_month": "2007-04",
+      "harmonized_event_count": 2246,
+      "raw_detection_count": 2515,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2515,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 36.75,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2007,
+      "month": 5,
+      "year_month": "2007-05",
+      "harmonized_event_count": 71,
+      "raw_detection_count": 79,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 79,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 19.7,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2007,
+      "month": 6,
+      "year_month": "2007-06",
+      "harmonized_event_count": 4,
+      "raw_detection_count": 6,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 6,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 14.75,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2007,
+      "month": 7,
+      "year_month": "2007-07",
+      "harmonized_event_count": 2,
+      "raw_detection_count": 2,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.05,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2007,
+      "month": 8,
+      "year_month": "2007-08",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 2,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.3,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2007,
+      "month": 9,
+      "year_month": "2007-09",
+      "harmonized_event_count": 2,
+      "raw_detection_count": 2,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.1,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2007,
+      "month": 10,
+      "year_month": "2007-10",
+      "harmonized_event_count": 3,
+      "raw_detection_count": 4,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 4,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.2,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2007,
+      "month": 11,
+      "year_month": "2007-11",
+      "harmonized_event_count": 9,
+      "raw_detection_count": 9,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 9,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2007,
+      "month": 12,
+      "year_month": "2007-12",
+      "harmonized_event_count": 9,
+      "raw_detection_count": 10,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 10,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.6,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2008,
+      "month": 1,
+      "year_month": "2008-01",
+      "harmonized_event_count": 6,
+      "raw_detection_count": 6,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 6,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.35,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2008,
+      "month": 2,
+      "year_month": "2008-02",
+      "harmonized_event_count": 42,
+      "raw_detection_count": 48,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 48,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.35,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2008,
+      "month": 3,
+      "year_month": "2008-03",
+      "harmonized_event_count": 869,
+      "raw_detection_count": 992,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 992,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 35.8,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2008,
+      "month": 4,
+      "year_month": "2008-04",
+      "harmonized_event_count": 1548,
+      "raw_detection_count": 1759,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1759,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 28.2,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2008,
+      "month": 5,
+      "year_month": "2008-05",
+      "harmonized_event_count": 17,
+      "raw_detection_count": 18,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 18,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 14.3,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2008,
+      "month": 6,
+      "year_month": "2008-06",
+      "harmonized_event_count": 4,
+      "raw_detection_count": 4,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 4,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 11.45,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2008,
+      "month": 7,
+      "year_month": "2008-07",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 1,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 14.0,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2008,
+      "month": 8,
+      "year_month": "2008-08",
+      "harmonized_event_count": 0,
+      "raw_detection_count": 0,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 0,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": null,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2008,
+      "month": 9,
+      "year_month": "2008-09",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 2,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 14.1,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2008,
+      "month": 10,
+      "year_month": "2008-10",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 2,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 5.8,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2008,
+      "month": 11,
+      "year_month": "2008-11",
+      "harmonized_event_count": 18,
+      "raw_detection_count": 19,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 19,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.5,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2008,
+      "month": 12,
+      "year_month": "2008-12",
+      "harmonized_event_count": 54,
+      "raw_detection_count": 55,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 55,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.1,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2009,
+      "month": 1,
+      "year_month": "2009-01",
+      "harmonized_event_count": 37,
+      "raw_detection_count": 39,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 39,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.6,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2009,
+      "month": 2,
+      "year_month": "2009-02",
+      "harmonized_event_count": 62,
+      "raw_detection_count": 66,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 66,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 10.45,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2009,
+      "month": 3,
+      "year_month": "2009-03",
+      "harmonized_event_count": 1521,
+      "raw_detection_count": 1792,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1792,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 24.6,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2009,
+      "month": 4,
+      "year_month": "2009-04",
+      "harmonized_event_count": 1577,
+      "raw_detection_count": 1824,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1824,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 27.5,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2009,
+      "month": 5,
+      "year_month": "2009-05",
+      "harmonized_event_count": 24,
+      "raw_detection_count": 25,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 25,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 10.5,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2009,
+      "month": 6,
+      "year_month": "2009-06",
+      "harmonized_event_count": 18,
+      "raw_detection_count": 23,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 23,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 25.05,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2009,
+      "month": 7,
+      "year_month": "2009-07",
+      "harmonized_event_count": 11,
+      "raw_detection_count": 11,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 11,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 15.9,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2009,
+      "month": 8,
+      "year_month": "2009-08",
+      "harmonized_event_count": 5,
+      "raw_detection_count": 5,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 5,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.0,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2009,
+      "month": 9,
+      "year_month": "2009-09",
+      "harmonized_event_count": 2,
+      "raw_detection_count": 2,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.9,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2009,
+      "month": 10,
+      "year_month": "2009-10",
+      "harmonized_event_count": 0,
+      "raw_detection_count": 0,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 0,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": null,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2009,
+      "month": 11,
+      "year_month": "2009-11",
+      "harmonized_event_count": 15,
+      "raw_detection_count": 15,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 15,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.6,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2009,
+      "month": 12,
+      "year_month": "2009-12",
+      "harmonized_event_count": 72,
+      "raw_detection_count": 73,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 73,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.7,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2010,
+      "month": 1,
+      "year_month": "2010-01",
+      "harmonized_event_count": 35,
+      "raw_detection_count": 36,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 36,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2010,
+      "month": 2,
+      "year_month": "2010-02",
+      "harmonized_event_count": 87,
+      "raw_detection_count": 93,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 93,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 9.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2010,
+      "month": 3,
+      "year_month": "2010-03",
+      "harmonized_event_count": 878,
+      "raw_detection_count": 1033,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1033,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 20.3,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2010,
+      "month": 4,
+      "year_month": "2010-04",
+      "harmonized_event_count": 1383,
+      "raw_detection_count": 1515,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1515,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 24.5,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2010,
+      "month": 5,
+      "year_month": "2010-05",
+      "harmonized_event_count": 22,
+      "raw_detection_count": 25,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 25,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 12.15,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2010,
+      "month": 6,
+      "year_month": "2010-06",
+      "harmonized_event_count": 5,
+      "raw_detection_count": 5,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 5,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 15.1,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2010,
+      "month": 7,
+      "year_month": "2010-07",
+      "harmonized_event_count": 4,
+      "raw_detection_count": 4,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 4,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 13.65,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2010,
+      "month": 8,
+      "year_month": "2010-08",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 1,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.9,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2010,
+      "month": 9,
+      "year_month": "2010-09",
+      "harmonized_event_count": 4,
+      "raw_detection_count": 4,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 4,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.15,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2010,
+      "month": 10,
+      "year_month": "2010-10",
+      "harmonized_event_count": 2,
+      "raw_detection_count": 3,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 3,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 3.85,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2010,
+      "month": 11,
+      "year_month": "2010-11",
+      "harmonized_event_count": 46,
+      "raw_detection_count": 49,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 49,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.8,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2010,
+      "month": 12,
+      "year_month": "2010-12",
+      "harmonized_event_count": 57,
+      "raw_detection_count": 57,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 57,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.2,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2011,
+      "month": 1,
+      "year_month": "2011-01",
+      "harmonized_event_count": 48,
+      "raw_detection_count": 49,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 49,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.2,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2011,
+      "month": 2,
+      "year_month": "2011-02",
+      "harmonized_event_count": 90,
+      "raw_detection_count": 92,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 92,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 9.95,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2011,
+      "month": 3,
+      "year_month": "2011-03",
+      "harmonized_event_count": 470,
+      "raw_detection_count": 524,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 524,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 21.65,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2011,
+      "month": 4,
+      "year_month": "2011-04",
+      "harmonized_event_count": 1611,
+      "raw_detection_count": 1873,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1873,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 29.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2011,
+      "month": 5,
+      "year_month": "2011-05",
+      "harmonized_event_count": 19,
+      "raw_detection_count": 19,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 19,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 11.8,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2011,
+      "month": 6,
+      "year_month": "2011-06",
+      "harmonized_event_count": 8,
+      "raw_detection_count": 8,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 8,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 10.8,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2011,
+      "month": 7,
+      "year_month": "2011-07",
+      "harmonized_event_count": 2,
+      "raw_detection_count": 2,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 9.75,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2011,
+      "month": 8,
+      "year_month": "2011-08",
+      "harmonized_event_count": 4,
+      "raw_detection_count": 4,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 4,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.95,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2011,
+      "month": 9,
+      "year_month": "2011-09",
+      "harmonized_event_count": 3,
+      "raw_detection_count": 3,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 3,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.1,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2011,
+      "month": 10,
+      "year_month": "2011-10",
+      "harmonized_event_count": 0,
+      "raw_detection_count": 1,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": null,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2011,
+      "month": 11,
+      "year_month": "2011-11",
+      "harmonized_event_count": 24,
+      "raw_detection_count": 24,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 24,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.0,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2011,
+      "month": 12,
+      "year_month": "2011-12",
+      "harmonized_event_count": 68,
+      "raw_detection_count": 68,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 68,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.3,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2012,
+      "month": 1,
+      "year_month": "2012-01",
+      "harmonized_event_count": 38,
+      "raw_detection_count": 41,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 41,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.7,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2012,
+      "month": 2,
+      "year_month": "2012-02",
+      "harmonized_event_count": 147,
+      "raw_detection_count": 160,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 160,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.5,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2012,
+      "month": 3,
+      "year_month": "2012-03",
+      "harmonized_event_count": 1881,
+      "raw_detection_count": 2150,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2150,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 27.6,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2012,
+      "month": 4,
+      "year_month": "2012-04",
+      "harmonized_event_count": 701,
+      "raw_detection_count": 800,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 800,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 25.6,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2012,
+      "month": 5,
+      "year_month": "2012-05",
+      "harmonized_event_count": 15,
+      "raw_detection_count": 15,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 15,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 9.5,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2012,
+      "month": 6,
+      "year_month": "2012-06",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 1,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.7,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2012,
+      "month": 7,
+      "year_month": "2012-07",
+      "harmonized_event_count": 1,
+      "raw_detection_count": 1,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.9,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2012,
+      "month": 8,
+      "year_month": "2012-08",
+      "harmonized_event_count": 2,
+      "raw_detection_count": 2,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 13.5,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2012,
+      "month": 9,
+      "year_month": "2012-09",
+      "harmonized_event_count": 2,
+      "raw_detection_count": 2,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 8.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2012,
+      "month": 10,
+      "year_month": "2012-10",
+      "harmonized_event_count": 3,
+      "raw_detection_count": 3,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 3,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.7,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2012,
+      "month": 11,
+      "year_month": "2012-11",
+      "harmonized_event_count": 29,
+      "raw_detection_count": 30,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 30,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.8,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2012,
+      "month": 12,
+      "year_month": "2012-12",
+      "harmonized_event_count": 42,
+      "raw_detection_count": 46,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 46,
+        "VIIRS": 0
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.75,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2013,
+      "month": 1,
+      "year_month": "2013-01",
+      "harmonized_event_count": 389,
+      "raw_detection_count": 482,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 66,
+        "VIIRS": 416
+      },
+      "overlap_events": 13,
+      "overlap_share": 0.033,
+      "median_frp_mw": 2.85,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2013,
+      "month": 2,
+      "year_month": "2013-02",
+      "harmonized_event_count": 363,
+      "raw_detection_count": 535,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 60,
+        "VIIRS": 475
+      },
+      "overlap_events": 22,
+      "overlap_share": 0.061,
+      "median_frp_mw": 3.34,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2013,
+      "month": 3,
+      "year_month": "2013-03",
+      "harmonized_event_count": 3097,
+      "raw_detection_count": 7538,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1529,
+        "VIIRS": 6009
+      },
+      "overlap_events": 413,
+      "overlap_share": 0.133,
+      "median_frp_mw": 7.19,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2013,
+      "month": 4,
+      "year_month": "2013-04",
+      "harmonized_event_count": 2895,
+      "raw_detection_count": 6306,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1193,
+        "VIIRS": 5113
+      },
+      "overlap_events": 365,
+      "overlap_share": 0.126,
+      "median_frp_mw": 6.02,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2013,
+      "month": 5,
+      "year_month": "2013-05",
+      "harmonized_event_count": 37,
+      "raw_detection_count": 69,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 17,
+        "VIIRS": 52
+      },
+      "overlap_events": 6,
+      "overlap_share": 0.162,
+      "median_frp_mw": 7.0,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2013,
+      "month": 6,
+      "year_month": "2013-06",
+      "harmonized_event_count": 21,
+      "raw_detection_count": 36,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 13,
+        "VIIRS": 23
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 9.2,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2013,
+      "month": 7,
+      "year_month": "2013-07",
+      "harmonized_event_count": 3,
+      "raw_detection_count": 4,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 0,
+        "VIIRS": 4
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 0.75,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2013,
+      "month": 8,
+      "year_month": "2013-08",
+      "harmonized_event_count": 6,
+      "raw_detection_count": 28,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 6,
+        "VIIRS": 22
+      },
+      "overlap_events": 2,
+      "overlap_share": 0.333,
+      "median_frp_mw": 19.51,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2013,
+      "month": 9,
+      "year_month": "2013-09",
+      "harmonized_event_count": 3,
+      "raw_detection_count": 9,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 0,
+        "VIIRS": 9
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 0.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2013,
+      "month": 10,
+      "year_month": "2013-10",
+      "harmonized_event_count": 11,
+      "raw_detection_count": 22,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 21
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 0.99,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2013,
+      "month": 11,
+      "year_month": "2013-11",
+      "harmonized_event_count": 271,
+      "raw_detection_count": 377,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 26,
+        "VIIRS": 351
+      },
+      "overlap_events": 8,
+      "overlap_share": 0.03,
+      "median_frp_mw": 3.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2013,
+      "month": 12,
+      "year_month": "2013-12",
+      "harmonized_event_count": 315,
+      "raw_detection_count": 381,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 22,
+        "VIIRS": 359
+      },
+      "overlap_events": 4,
+      "overlap_share": 0.013,
+      "median_frp_mw": 2.66,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2014,
+      "month": 1,
+      "year_month": "2014-01",
+      "harmonized_event_count": 254,
+      "raw_detection_count": 314,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 33,
+        "VIIRS": 281
+      },
+      "overlap_events": 5,
+      "overlap_share": 0.02,
+      "median_frp_mw": 2.96,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2014,
+      "month": 2,
+      "year_month": "2014-02",
+      "harmonized_event_count": 296,
+      "raw_detection_count": 397,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 54,
+        "VIIRS": 343
+      },
+      "overlap_events": 16,
+      "overlap_share": 0.054,
+      "median_frp_mw": 3.42,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2014,
+      "month": 3,
+      "year_month": "2014-03",
+      "harmonized_event_count": 2230,
+      "raw_detection_count": 6052,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1001,
+        "VIIRS": 5051
+      },
+      "overlap_events": 307,
+      "overlap_share": 0.138,
+      "median_frp_mw": 7.09,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2014,
+      "month": 4,
+      "year_month": "2014-04",
+      "harmonized_event_count": 4474,
+      "raw_detection_count": 9693,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1555,
+        "VIIRS": 8138
+      },
+      "overlap_events": 479,
+      "overlap_share": 0.107,
+      "median_frp_mw": 5.98,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2014,
+      "month": 5,
+      "year_month": "2014-05",
+      "harmonized_event_count": 134,
+      "raw_detection_count": 176,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 16,
+        "VIIRS": 160
+      },
+      "overlap_events": 3,
+      "overlap_share": 0.022,
+      "median_frp_mw": 4.0,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2014,
+      "month": 6,
+      "year_month": "2014-06",
+      "harmonized_event_count": 22,
+      "raw_detection_count": 32,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 10,
+        "VIIRS": 22
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.06,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2014,
+      "month": 7,
+      "year_month": "2014-07",
+      "harmonized_event_count": 5,
+      "raw_detection_count": 7,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 5
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 1.54,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2014,
+      "month": 8,
+      "year_month": "2014-08",
+      "harmonized_event_count": 3,
+      "raw_detection_count": 7,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 6
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 1.72,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2014,
+      "month": 9,
+      "year_month": "2014-09",
+      "harmonized_event_count": 14,
+      "raw_detection_count": 20,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 3,
+        "VIIRS": 17
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 3.62,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2014,
+      "month": 10,
+      "year_month": "2014-10",
+      "harmonized_event_count": 28,
+      "raw_detection_count": 51,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 3,
+        "VIIRS": 48
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 2.17,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2014,
+      "month": 11,
+      "year_month": "2014-11",
+      "harmonized_event_count": 476,
+      "raw_detection_count": 690,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 59,
+        "VIIRS": 631
+      },
+      "overlap_events": 16,
+      "overlap_share": 0.034,
+      "median_frp_mw": 3.52,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2014,
+      "month": 12,
+      "year_month": "2014-12",
+      "harmonized_event_count": 646,
+      "raw_detection_count": 807,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 81,
+        "VIIRS": 726
+      },
+      "overlap_events": 18,
+      "overlap_share": 0.028,
+      "median_frp_mw": 3.06,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2015,
+      "month": 1,
+      "year_month": "2015-01",
+      "harmonized_event_count": 352,
+      "raw_detection_count": 462,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 47,
+        "VIIRS": 415
+      },
+      "overlap_events": 6,
+      "overlap_share": 0.017,
+      "median_frp_mw": 2.96,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2015,
+      "month": 2,
+      "year_month": "2015-02",
+      "harmonized_event_count": 353,
+      "raw_detection_count": 504,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 77,
+        "VIIRS": 427
+      },
+      "overlap_events": 24,
+      "overlap_share": 0.068,
+      "median_frp_mw": 3.2,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2015,
+      "month": 3,
+      "year_month": "2015-03",
+      "harmonized_event_count": 2551,
+      "raw_detection_count": 4918,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 817,
+        "VIIRS": 4101
+      },
+      "overlap_events": 303,
+      "overlap_share": 0.119,
+      "median_frp_mw": 4.76,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2015,
+      "month": 4,
+      "year_month": "2015-04",
+      "harmonized_event_count": 1403,
+      "raw_detection_count": 2874,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 524,
+        "VIIRS": 2350
+      },
+      "overlap_events": 129,
+      "overlap_share": 0.092,
+      "median_frp_mw": 8.99,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2015,
+      "month": 5,
+      "year_month": "2015-05",
+      "harmonized_event_count": 168,
+      "raw_detection_count": 245,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 29,
+        "VIIRS": 216
+      },
+      "overlap_events": 10,
+      "overlap_share": 0.06,
+      "median_frp_mw": 4.82,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2015,
+      "month": 6,
+      "year_month": "2015-06",
+      "harmonized_event_count": 18,
+      "raw_detection_count": 22,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 20
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 3.58,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2015,
+      "month": 7,
+      "year_month": "2015-07",
+      "harmonized_event_count": 6,
+      "raw_detection_count": 8,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 7
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.99,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2015,
+      "month": 8,
+      "year_month": "2015-08",
+      "harmonized_event_count": 3,
+      "raw_detection_count": 13,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 12
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 1.36,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2015,
+      "month": 9,
+      "year_month": "2015-09",
+      "harmonized_event_count": 15,
+      "raw_detection_count": 27,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 5,
+        "VIIRS": 22
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 1.27,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2015,
+      "month": 10,
+      "year_month": "2015-10",
+      "harmonized_event_count": 26,
+      "raw_detection_count": 50,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 48
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 1.07,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2015,
+      "month": 11,
+      "year_month": "2015-11",
+      "harmonized_event_count": 304,
+      "raw_detection_count": 419,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 27,
+        "VIIRS": 392
+      },
+      "overlap_events": 6,
+      "overlap_share": 0.02,
+      "median_frp_mw": 2.75,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2015,
+      "month": 12,
+      "year_month": "2015-12",
+      "harmonized_event_count": 527,
+      "raw_detection_count": 678,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 56,
+        "VIIRS": 622
+      },
+      "overlap_events": 13,
+      "overlap_share": 0.025,
+      "median_frp_mw": 3.01,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2016,
+      "month": 1,
+      "year_month": "2016-01",
+      "harmonized_event_count": 259,
+      "raw_detection_count": 356,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 41,
+        "VIIRS": 315
+      },
+      "overlap_events": 10,
+      "overlap_share": 0.039,
+      "median_frp_mw": 2.79,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2016,
+      "month": 2,
+      "year_month": "2016-02",
+      "harmonized_event_count": 210,
+      "raw_detection_count": 295,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 27,
+        "VIIRS": 268
+      },
+      "overlap_events": 9,
+      "overlap_share": 0.043,
+      "median_frp_mw": 3.67,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2016,
+      "month": 3,
+      "year_month": "2016-03",
+      "harmonized_event_count": 1496,
+      "raw_detection_count": 3892,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 870,
+        "VIIRS": 3022
+      },
+      "overlap_events": 232,
+      "overlap_share": 0.155,
+      "median_frp_mw": 7.95,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2016,
+      "month": 4,
+      "year_month": "2016-04",
+      "harmonized_event_count": 1732,
+      "raw_detection_count": 3671,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 779,
+        "VIIRS": 2892
+      },
+      "overlap_events": 236,
+      "overlap_share": 0.136,
+      "median_frp_mw": 8.79,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2016,
+      "month": 5,
+      "year_month": "2016-05",
+      "harmonized_event_count": 114,
+      "raw_detection_count": 169,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 17,
+        "VIIRS": 152
+      },
+      "overlap_events": 3,
+      "overlap_share": 0.026,
+      "median_frp_mw": 4.46,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2016,
+      "month": 6,
+      "year_month": "2016-06",
+      "harmonized_event_count": 19,
+      "raw_detection_count": 29,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 10,
+        "VIIRS": 19
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.6,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2016,
+      "month": 7,
+      "year_month": "2016-07",
+      "harmonized_event_count": 3,
+      "raw_detection_count": 7,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 0,
+        "VIIRS": 7
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 1.89,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2016,
+      "month": 8,
+      "year_month": "2016-08",
+      "harmonized_event_count": 21,
+      "raw_detection_count": 25,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 6,
+        "VIIRS": 19
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 3.39,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2016,
+      "month": 9,
+      "year_month": "2016-09",
+      "harmonized_event_count": 10,
+      "raw_detection_count": 13,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 5,
+        "VIIRS": 8
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 4.12,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2016,
+      "month": 10,
+      "year_month": "2016-10",
+      "harmonized_event_count": 29,
+      "raw_detection_count": 36,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 35
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 1.59,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2016,
+      "month": 11,
+      "year_month": "2016-11",
+      "harmonized_event_count": 153,
+      "raw_detection_count": 213,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 16,
+        "VIIRS": 197
+      },
+      "overlap_events": 5,
+      "overlap_share": 0.033,
+      "median_frp_mw": 2.59,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2016,
+      "month": 12,
+      "year_month": "2016-12",
+      "harmonized_event_count": 581,
+      "raw_detection_count": 750,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 80,
+        "VIIRS": 670
+      },
+      "overlap_events": 20,
+      "overlap_share": 0.034,
+      "median_frp_mw": 3.28,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2017,
+      "month": 1,
+      "year_month": "2017-01",
+      "harmonized_event_count": 601,
+      "raw_detection_count": 737,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 45,
+        "VIIRS": 692
+      },
+      "overlap_events": 11,
+      "overlap_share": 0.018,
+      "median_frp_mw": 2.71,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2017,
+      "month": 2,
+      "year_month": "2017-02",
+      "harmonized_event_count": 398,
+      "raw_detection_count": 554,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 70,
+        "VIIRS": 484
+      },
+      "overlap_events": 23,
+      "overlap_share": 0.058,
+      "median_frp_mw": 3.26,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2017,
+      "month": 3,
+      "year_month": "2017-03",
+      "harmonized_event_count": 931,
+      "raw_detection_count": 1605,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 344,
+        "VIIRS": 1261
+      },
+      "overlap_events": 79,
+      "overlap_share": 0.085,
+      "median_frp_mw": 6.81,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2017,
+      "month": 4,
+      "year_month": "2017-04",
+      "harmonized_event_count": 1836,
+      "raw_detection_count": 4430,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 919,
+        "VIIRS": 3511
+      },
+      "overlap_events": 277,
+      "overlap_share": 0.151,
+      "median_frp_mw": 9.4,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2017,
+      "month": 5,
+      "year_month": "2017-05",
+      "harmonized_event_count": 117,
+      "raw_detection_count": 175,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 41,
+        "VIIRS": 134
+      },
+      "overlap_events": 9,
+      "overlap_share": 0.077,
+      "median_frp_mw": 5.64,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2017,
+      "month": 6,
+      "year_month": "2017-06",
+      "harmonized_event_count": 18,
+      "raw_detection_count": 19,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 9,
+        "VIIRS": 10
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 5.82,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2017,
+      "month": 7,
+      "year_month": "2017-07",
+      "harmonized_event_count": 5,
+      "raw_detection_count": 5,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 3,
+        "VIIRS": 2
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 5.1,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2017,
+      "month": 8,
+      "year_month": "2017-08",
+      "harmonized_event_count": 6,
+      "raw_detection_count": 10,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 8
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 4.81,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2017,
+      "month": 9,
+      "year_month": "2017-09",
+      "harmonized_event_count": 15,
+      "raw_detection_count": 21,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 3,
+        "VIIRS": 18
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 2.38,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2017,
+      "month": 10,
+      "year_month": "2017-10",
+      "harmonized_event_count": 28,
+      "raw_detection_count": 41,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 0,
+        "VIIRS": 41
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 1.25,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2017,
+      "month": 11,
+      "year_month": "2017-11",
+      "harmonized_event_count": 138,
+      "raw_detection_count": 206,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 8,
+        "VIIRS": 198
+      },
+      "overlap_events": 3,
+      "overlap_share": 0.022,
+      "median_frp_mw": 1.94,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2017,
+      "month": 12,
+      "year_month": "2017-12",
+      "harmonized_event_count": 277,
+      "raw_detection_count": 401,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 24,
+        "VIIRS": 377
+      },
+      "overlap_events": 7,
+      "overlap_share": 0.025,
+      "median_frp_mw": 2.74,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2018,
+      "month": 1,
+      "year_month": "2018-01",
+      "harmonized_event_count": 280,
+      "raw_detection_count": 370,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 30,
+        "VIIRS": 340
+      },
+      "overlap_events": 5,
+      "overlap_share": 0.018,
+      "median_frp_mw": 2.68,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2018,
+      "month": 2,
+      "year_month": "2018-02",
+      "harmonized_event_count": 161,
+      "raw_detection_count": 243,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 25,
+        "VIIRS": 218
+      },
+      "overlap_events": 10,
+      "overlap_share": 0.062,
+      "median_frp_mw": 3.21,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2018,
+      "month": 3,
+      "year_month": "2018-03",
+      "harmonized_event_count": 2509,
+      "raw_detection_count": 6455,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1340,
+        "VIIRS": 5115
+      },
+      "overlap_events": 357,
+      "overlap_share": 0.142,
+      "median_frp_mw": 10.93,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2018,
+      "month": 4,
+      "year_month": "2018-04",
+      "harmonized_event_count": 1578,
+      "raw_detection_count": 3039,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 706,
+        "VIIRS": 2333
+      },
+      "overlap_events": 207,
+      "overlap_share": 0.131,
+      "median_frp_mw": 8.03,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2018,
+      "month": 5,
+      "year_month": "2018-05",
+      "harmonized_event_count": 60,
+      "raw_detection_count": 76,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 21,
+        "VIIRS": 55
+      },
+      "overlap_events": 3,
+      "overlap_share": 0.05,
+      "median_frp_mw": 4.59,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2018,
+      "month": 6,
+      "year_month": "2018-06",
+      "harmonized_event_count": 19,
+      "raw_detection_count": 23,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 10,
+        "VIIRS": 13
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.8,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2018,
+      "month": 7,
+      "year_month": "2018-07",
+      "harmonized_event_count": 5,
+      "raw_detection_count": 7,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2,
+        "VIIRS": 5
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 4.15,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2018,
+      "month": 8,
+      "year_month": "2018-08",
+      "harmonized_event_count": 16,
+      "raw_detection_count": 28,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 8,
+        "VIIRS": 20
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.11,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2018,
+      "month": 9,
+      "year_month": "2018-09",
+      "harmonized_event_count": 12,
+      "raw_detection_count": 25,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 5,
+        "VIIRS": 20
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 2.27,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2018,
+      "month": 10,
+      "year_month": "2018-10",
+      "harmonized_event_count": 53,
+      "raw_detection_count": 86,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 10,
+        "VIIRS": 76
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 1.48,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2018,
+      "month": 11,
+      "year_month": "2018-11",
+      "harmonized_event_count": 368,
+      "raw_detection_count": 588,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 59,
+        "VIIRS": 529
+      },
+      "overlap_events": 20,
+      "overlap_share": 0.054,
+      "median_frp_mw": 2.95,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2018,
+      "month": 12,
+      "year_month": "2018-12",
+      "harmonized_event_count": 624,
+      "raw_detection_count": 797,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 73,
+        "VIIRS": 724
+      },
+      "overlap_events": 16,
+      "overlap_share": 0.026,
+      "median_frp_mw": 2.81,
+      "climatology_mean": null,
+      "climatology_std": null,
+      "anomaly_z": null,
+      "critical": false
+    },
+    {
+      "year": 2019,
+      "month": 1,
+      "year_month": "2019-01",
+      "harmonized_event_count": 1097,
+      "raw_detection_count": 1538,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 56,
+        "VIIRS": 1482
+      },
+      "overlap_events": 25,
+      "overlap_share": 0.023,
+      "median_frp_mw": 2.56,
+      "climatology_mean": 589.3,
+      "climatology_std": 261.4,
+      "anomaly_z": 1.94,
+      "critical": true
+    },
+    {
+      "year": 2019,
+      "month": 2,
+      "year_month": "2019-02",
+      "harmonized_event_count": 556,
+      "raw_detection_count": 887,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 67,
+        "VIIRS": 820
+      },
+      "overlap_events": 21,
+      "overlap_share": 0.038,
+      "median_frp_mw": 3.0,
+      "climatology_mean": 509.5,
+      "climatology_std": 120.2,
+      "anomaly_z": 0.39,
+      "critical": false
+    },
+    {
+      "year": 2019,
+      "month": 3,
+      "year_month": "2019-03",
+      "harmonized_event_count": 3959,
+      "raw_detection_count": 13186,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1639,
+        "VIIRS": 11547
+      },
+      "overlap_events": 631,
+      "overlap_share": 0.159,
+      "median_frp_mw": 6.91,
+      "climatology_mean": 2373.5,
+      "climatology_std": 1342.8,
+      "anomaly_z": 1.18,
+      "critical": true
+    },
+    {
+      "year": 2019,
+      "month": 4,
+      "year_month": "2019-04",
+      "harmonized_event_count": 2878,
+      "raw_detection_count": 7471,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 824,
+        "VIIRS": 6647
+      },
+      "overlap_events": 321,
+      "overlap_share": 0.112,
+      "median_frp_mw": 6.23,
+      "climatology_mean": 3887.8,
+      "climatology_std": 689.1,
+      "anomaly_z": -1.47,
+      "critical": false
+    },
+    {
+      "year": 2019,
+      "month": 5,
+      "year_month": "2019-05",
+      "harmonized_event_count": 153,
+      "raw_detection_count": 272,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 17,
+        "VIIRS": 255
+      },
+      "overlap_events": 2,
+      "overlap_share": 0.013,
+      "median_frp_mw": 3.61,
+      "climatology_mean": 310.7,
+      "climatology_std": 145.5,
+      "anomaly_z": -1.08,
+      "critical": false
+    },
+    {
+      "year": 2019,
+      "month": 6,
+      "year_month": "2019-06",
+      "harmonized_event_count": 51,
+      "raw_detection_count": 146,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 13,
+        "VIIRS": 133
+      },
+      "overlap_events": 1,
+      "overlap_share": 0.02,
+      "median_frp_mw": 6.87,
+      "climatology_mean": 38.5,
+      "climatology_std": 24.7,
+      "anomaly_z": 0.51,
+      "critical": false
+    },
+    {
+      "year": 2019,
+      "month": 7,
+      "year_month": "2019-07",
+      "harmonized_event_count": 12,
+      "raw_detection_count": 26,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 3,
+        "VIIRS": 23
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 4.69,
+      "climatology_mean": 21.5,
+      "climatology_std": 12.8,
+      "anomaly_z": -0.74,
+      "critical": false
+    },
+    {
+      "year": 2019,
+      "month": 8,
+      "year_month": "2019-08",
+      "harmonized_event_count": 35,
+      "raw_detection_count": 88,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 14,
+        "VIIRS": 74
+      },
+      "overlap_events": 1,
+      "overlap_share": 0.029,
+      "median_frp_mw": 2.1,
+      "climatology_mean": 22.2,
+      "climatology_std": 8.2,
+      "anomaly_z": 1.56,
+      "critical": true
+    },
+    {
+      "year": 2019,
+      "month": 9,
+      "year_month": "2019-09",
+      "harmonized_event_count": 28,
+      "raw_detection_count": 71,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 9,
+        "VIIRS": 62
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 3.34,
+      "climatology_mean": 27.5,
+      "climatology_std": 3.7,
+      "anomaly_z": 0.13,
+      "critical": false
+    },
+    {
+      "year": 2019,
+      "month": 10,
+      "year_month": "2019-10",
+      "harmonized_event_count": 50,
+      "raw_detection_count": 130,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 9,
+        "VIIRS": 121
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 2.31,
+      "climatology_mean": 58.3,
+      "climatology_std": 18.9,
+      "anomaly_z": -0.44,
+      "critical": false
+    },
+    {
+      "year": 2019,
+      "month": 11,
+      "year_month": "2019-11",
+      "harmonized_event_count": 227,
+      "raw_detection_count": 363,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 18,
+        "VIIRS": 345
+      },
+      "overlap_events": 8,
+      "overlap_share": 0.035,
+      "median_frp_mw": 2.41,
+      "climatology_mean": 293.2,
+      "climatology_std": 74.0,
+      "anomaly_z": -0.89,
+      "critical": false
+    },
+    {
+      "year": 2019,
+      "month": 12,
+      "year_month": "2019-12",
+      "harmonized_event_count": 686,
+      "raw_detection_count": 1024,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 50,
+        "VIIRS": 974
+      },
+      "overlap_events": 27,
+      "overlap_share": 0.039,
+      "median_frp_mw": 2.5,
+      "climatology_mean": 607.3,
+      "climatology_std": 129.7,
+      "anomaly_z": 0.61,
+      "critical": false
+    },
+    {
+      "year": 2020,
+      "month": 1,
+      "year_month": "2020-01",
+      "harmonized_event_count": 504,
+      "raw_detection_count": 754,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 37,
+        "VIIRS": 717
+      },
+      "overlap_events": 10,
+      "overlap_share": 0.02,
+      "median_frp_mw": 2.41,
+      "climatology_mean": 589.3,
+      "climatology_std": 261.4,
+      "anomaly_z": -0.33,
+      "critical": false
+    },
+    {
+      "year": 2020,
+      "month": 2,
+      "year_month": "2020-02",
+      "harmonized_event_count": 637,
+      "raw_detection_count": 950,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 69,
+        "VIIRS": 881
+      },
+      "overlap_events": 12,
+      "overlap_share": 0.019,
+      "median_frp_mw": 3.45,
+      "climatology_mean": 509.5,
+      "climatology_std": 120.2,
+      "anomaly_z": 1.06,
+      "critical": true
+    },
+    {
+      "year": 2020,
+      "month": 3,
+      "year_month": "2020-03",
+      "harmonized_event_count": 3441,
+      "raw_detection_count": 10761,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1376,
+        "VIIRS": 9385
+      },
+      "overlap_events": 479,
+      "overlap_share": 0.139,
+      "median_frp_mw": 5.7,
+      "climatology_mean": 2373.5,
+      "climatology_std": 1342.8,
+      "anomaly_z": 0.79,
+      "critical": false
+    },
+    {
+      "year": 2020,
+      "month": 4,
+      "year_month": "2020-04",
+      "harmonized_event_count": 3636,
+      "raw_detection_count": 10096,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1267,
+        "VIIRS": 8829
+      },
+      "overlap_events": 481,
+      "overlap_share": 0.132,
+      "median_frp_mw": 6.42,
+      "climatology_mean": 3887.8,
+      "climatology_std": 689.1,
+      "anomaly_z": -0.37,
+      "critical": false
+    },
+    {
+      "year": 2020,
+      "month": 5,
+      "year_month": "2020-05",
+      "harmonized_event_count": 355,
+      "raw_detection_count": 654,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 65,
+        "VIIRS": 589
+      },
+      "overlap_events": 21,
+      "overlap_share": 0.059,
+      "median_frp_mw": 4.79,
+      "climatology_mean": 310.7,
+      "climatology_std": 145.5,
+      "anomaly_z": 0.3,
+      "critical": false
+    },
+    {
+      "year": 2020,
+      "month": 6,
+      "year_month": "2020-06",
+      "harmonized_event_count": 24,
+      "raw_detection_count": 57,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 12,
+        "VIIRS": 45
+      },
+      "overlap_events": 1,
+      "overlap_share": 0.042,
+      "median_frp_mw": 5.0,
+      "climatology_mean": 38.5,
+      "climatology_std": 24.7,
+      "anomaly_z": -0.59,
+      "critical": false
+    },
+    {
+      "year": 2020,
+      "month": 7,
+      "year_month": "2020-07",
+      "harmonized_event_count": 13,
+      "raw_detection_count": 40,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 7,
+        "VIIRS": 33
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 2.41,
+      "climatology_mean": 21.5,
+      "climatology_std": 12.8,
+      "anomaly_z": -0.66,
+      "critical": false
+    },
+    {
+      "year": 2020,
+      "month": 8,
+      "year_month": "2020-08",
+      "harmonized_event_count": 19,
+      "raw_detection_count": 46,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 6,
+        "VIIRS": 40
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 1.43,
+      "climatology_mean": 22.2,
+      "climatology_std": 8.2,
+      "anomaly_z": -0.38,
+      "critical": false
+    },
+    {
+      "year": 2020,
+      "month": 9,
+      "year_month": "2020-09",
+      "harmonized_event_count": 21,
+      "raw_detection_count": 56,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 8,
+        "VIIRS": 48
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 2.58,
+      "climatology_mean": 27.5,
+      "climatology_std": 3.7,
+      "anomaly_z": -1.74,
+      "critical": false
+    },
+    {
+      "year": 2020,
+      "month": 10,
+      "year_month": "2020-10",
+      "harmonized_event_count": 49,
+      "raw_detection_count": 115,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 3,
+        "VIIRS": 112
+      },
+      "overlap_events": 1,
+      "overlap_share": 0.02,
+      "median_frp_mw": 1.48,
+      "climatology_mean": 58.3,
+      "climatology_std": 18.9,
+      "anomaly_z": -0.49,
+      "critical": false
+    },
+    {
+      "year": 2020,
+      "month": 11,
+      "year_month": "2020-11",
+      "harmonized_event_count": 317,
+      "raw_detection_count": 547,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 29,
+        "VIIRS": 518
+      },
+      "overlap_events": 7,
+      "overlap_share": 0.022,
+      "median_frp_mw": 2.46,
+      "climatology_mean": 293.2,
+      "climatology_std": 74.0,
+      "anomaly_z": 0.32,
+      "critical": false
+    },
+    {
+      "year": 2020,
+      "month": 12,
+      "year_month": "2020-12",
+      "harmonized_event_count": 566,
+      "raw_detection_count": 886,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 24,
+        "VIIRS": 862
+      },
+      "overlap_events": 10,
+      "overlap_share": 0.018,
+      "median_frp_mw": 2.42,
+      "climatology_mean": 607.3,
+      "climatology_std": 129.7,
+      "anomaly_z": -0.32,
+      "critical": false
+    },
+    {
+      "year": 2021,
+      "month": 1,
+      "year_month": "2021-01",
+      "harmonized_event_count": 443,
+      "raw_detection_count": 715,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 42,
+        "VIIRS": 673
+      },
+      "overlap_events": 16,
+      "overlap_share": 0.036,
+      "median_frp_mw": 2.54,
+      "climatology_mean": 589.3,
+      "climatology_std": 261.4,
+      "anomaly_z": -0.56,
+      "critical": false
+    },
+    {
+      "year": 2021,
+      "month": 2,
+      "year_month": "2021-02",
+      "harmonized_event_count": 500,
+      "raw_detection_count": 792,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 56,
+        "VIIRS": 736
+      },
+      "overlap_events": 16,
+      "overlap_share": 0.032,
+      "median_frp_mw": 3.06,
+      "climatology_mean": 509.5,
+      "climatology_std": 120.2,
+      "anomaly_z": -0.08,
+      "critical": false
+    },
+    {
+      "year": 2021,
+      "month": 3,
+      "year_month": "2021-03",
+      "harmonized_event_count": 3223,
+      "raw_detection_count": 10034,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1061,
+        "VIIRS": 8973
+      },
+      "overlap_events": 410,
+      "overlap_share": 0.127,
+      "median_frp_mw": 4.71,
+      "climatology_mean": 2373.5,
+      "climatology_std": 1342.8,
+      "anomaly_z": 0.63,
+      "critical": false
+    },
+    {
+      "year": 2021,
+      "month": 4,
+      "year_month": "2021-04",
+      "harmonized_event_count": 4400,
+      "raw_detection_count": 12551,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1536,
+        "VIIRS": 11015
+      },
+      "overlap_events": 553,
+      "overlap_share": 0.126,
+      "median_frp_mw": 5.92,
+      "climatology_mean": 3887.8,
+      "climatology_std": 689.1,
+      "anomaly_z": 0.74,
+      "critical": false
+    },
+    {
+      "year": 2021,
+      "month": 5,
+      "year_month": "2021-05",
+      "harmonized_event_count": 374,
+      "raw_detection_count": 619,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 67,
+        "VIIRS": 552
+      },
+      "overlap_events": 13,
+      "overlap_share": 0.035,
+      "median_frp_mw": 4.2,
+      "climatology_mean": 310.7,
+      "climatology_std": 145.5,
+      "anomaly_z": 0.44,
+      "critical": false
+    },
+    {
+      "year": 2021,
+      "month": 6,
+      "year_month": "2021-06",
+      "harmonized_event_count": 32,
+      "raw_detection_count": 79,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 11,
+        "VIIRS": 68
+      },
+      "overlap_events": 1,
+      "overlap_share": 0.031,
+      "median_frp_mw": 5.28,
+      "climatology_mean": 38.5,
+      "climatology_std": 24.7,
+      "anomaly_z": -0.26,
+      "critical": false
+    },
+    {
+      "year": 2021,
+      "month": 7,
+      "year_month": "2021-07",
+      "harmonized_event_count": 15,
+      "raw_detection_count": 30,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 4,
+        "VIIRS": 26
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 3.33,
+      "climatology_mean": 21.5,
+      "climatology_std": 12.8,
+      "anomaly_z": -0.51,
+      "critical": false
+    },
+    {
+      "year": 2021,
+      "month": 8,
+      "year_month": "2021-08",
+      "harmonized_event_count": 16,
+      "raw_detection_count": 33,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 7,
+        "VIIRS": 26
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 6.15,
+      "climatology_mean": 22.2,
+      "climatology_std": 8.2,
+      "anomaly_z": -0.75,
+      "critical": false
+    },
+    {
+      "year": 2021,
+      "month": 9,
+      "year_month": "2021-09",
+      "harmonized_event_count": 29,
+      "raw_detection_count": 59,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 4,
+        "VIIRS": 55
+      },
+      "overlap_events": 1,
+      "overlap_share": 0.034,
+      "median_frp_mw": 2.14,
+      "climatology_mean": 27.5,
+      "climatology_std": 3.7,
+      "anomaly_z": 0.4,
+      "critical": false
+    },
+    {
+      "year": 2021,
+      "month": 10,
+      "year_month": "2021-10",
+      "harmonized_event_count": 65,
+      "raw_detection_count": 136,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 9,
+        "VIIRS": 127
+      },
+      "overlap_events": 1,
+      "overlap_share": 0.015,
+      "median_frp_mw": 1.48,
+      "climatology_mean": 58.3,
+      "climatology_std": 18.9,
+      "anomaly_z": 0.35,
+      "critical": false
+    },
+    {
+      "year": 2021,
+      "month": 11,
+      "year_month": "2021-11",
+      "harmonized_event_count": 419,
+      "raw_detection_count": 815,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 32,
+        "VIIRS": 783
+      },
+      "overlap_events": 18,
+      "overlap_share": 0.043,
+      "median_frp_mw": 2.8,
+      "climatology_mean": 293.2,
+      "climatology_std": 74.0,
+      "anomaly_z": 1.7,
+      "critical": true
+    },
+    {
+      "year": 2021,
+      "month": 12,
+      "year_month": "2021-12",
+      "harmonized_event_count": 791,
+      "raw_detection_count": 1289,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 66,
+        "VIIRS": 1223
+      },
+      "overlap_events": 33,
+      "overlap_share": 0.042,
+      "median_frp_mw": 2.85,
+      "climatology_mean": 607.3,
+      "climatology_std": 129.7,
+      "anomaly_z": 1.42,
+      "critical": true
+    },
+    {
+      "year": 2022,
+      "month": 1,
+      "year_month": "2022-01",
+      "harmonized_event_count": 553,
+      "raw_detection_count": 821,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 42,
+        "VIIRS": 779
+      },
+      "overlap_events": 9,
+      "overlap_share": 0.016,
+      "median_frp_mw": 2.45,
+      "climatology_mean": 589.3,
+      "climatology_std": 261.4,
+      "anomaly_z": -0.14,
+      "critical": false
+    },
+    {
+      "year": 2022,
+      "month": 2,
+      "year_month": "2022-02",
+      "harmonized_event_count": 415,
+      "raw_detection_count": 655,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 52,
+        "VIIRS": 603
+      },
+      "overlap_events": 10,
+      "overlap_share": 0.024,
+      "median_frp_mw": 2.96,
+      "climatology_mean": 509.5,
+      "climatology_std": 120.2,
+      "anomaly_z": -0.79,
+      "critical": false
+    },
+    {
+      "year": 2022,
+      "month": 3,
+      "year_month": "2022-03",
+      "harmonized_event_count": 993,
+      "raw_detection_count": 2226,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 210,
+        "VIIRS": 2016
+      },
+      "overlap_events": 76,
+      "overlap_share": 0.077,
+      "median_frp_mw": 4.54,
+      "climatology_mean": 2373.5,
+      "climatology_std": 1342.8,
+      "anomaly_z": -1.03,
+      "critical": false
+    },
+    {
+      "year": 2022,
+      "month": 4,
+      "year_month": "2022-04",
+      "harmonized_event_count": 3455,
+      "raw_detection_count": 10229,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 529,
+        "VIIRS": 9700
+      },
+      "overlap_events": 203,
+      "overlap_share": 0.059,
+      "median_frp_mw": 7.31,
+      "climatology_mean": 3887.8,
+      "climatology_std": 689.1,
+      "anomaly_z": -0.63,
+      "critical": false
+    },
+    {
+      "year": 2022,
+      "month": 5,
+      "year_month": "2022-05",
+      "harmonized_event_count": 124,
+      "raw_detection_count": 202,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 22,
+        "VIIRS": 180
+      },
+      "overlap_events": 7,
+      "overlap_share": 0.056,
+      "median_frp_mw": 4.45,
+      "climatology_mean": 310.7,
+      "climatology_std": 145.5,
+      "anomaly_z": -1.28,
+      "critical": false
+    },
+    {
+      "year": 2022,
+      "month": 6,
+      "year_month": "2022-06",
+      "harmonized_event_count": 23,
+      "raw_detection_count": 56,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 9,
+        "VIIRS": 47
+      },
+      "overlap_events": 1,
+      "overlap_share": 0.043,
+      "median_frp_mw": 11.3,
+      "climatology_mean": 38.5,
+      "climatology_std": 24.7,
+      "anomaly_z": -0.63,
+      "critical": false
+    },
+    {
+      "year": 2022,
+      "month": 7,
+      "year_month": "2022-07",
+      "harmonized_event_count": 38,
+      "raw_detection_count": 53,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 22,
+        "VIIRS": 31
+      },
+      "overlap_events": 1,
+      "overlap_share": 0.026,
+      "median_frp_mw": 5.35,
+      "climatology_mean": 21.5,
+      "climatology_std": 12.8,
+      "anomaly_z": 1.29,
+      "critical": true
+    },
+    {
+      "year": 2022,
+      "month": 8,
+      "year_month": "2022-08",
+      "harmonized_event_count": 25,
+      "raw_detection_count": 52,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 4,
+        "VIIRS": 48
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 3.18,
+      "climatology_mean": 22.2,
+      "climatology_std": 8.2,
+      "anomaly_z": 0.34,
+      "critical": false
+    },
+    {
+      "year": 2022,
+      "month": 9,
+      "year_month": "2022-09",
+      "harmonized_event_count": 29,
+      "raw_detection_count": 52,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 11,
+        "VIIRS": 41
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 3.26,
+      "climatology_mean": 27.5,
+      "climatology_std": 3.7,
+      "anomaly_z": 0.4,
+      "critical": false
+    },
+    {
+      "year": 2022,
+      "month": 10,
+      "year_month": "2022-10",
+      "harmonized_event_count": 67,
+      "raw_detection_count": 147,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 8,
+        "VIIRS": 139
+      },
+      "overlap_events": 1,
+      "overlap_share": 0.015,
+      "median_frp_mw": 1.73,
+      "climatology_mean": 58.3,
+      "climatology_std": 18.9,
+      "anomaly_z": 0.46,
+      "critical": false
+    },
+    {
+      "year": 2022,
+      "month": 11,
+      "year_month": "2022-11",
+      "harmonized_event_count": 258,
+      "raw_detection_count": 462,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 14,
+        "VIIRS": 448
+      },
+      "overlap_events": 4,
+      "overlap_share": 0.016,
+      "median_frp_mw": 2.59,
+      "climatology_mean": 293.2,
+      "climatology_std": 74.0,
+      "anomaly_z": -0.47,
+      "critical": false
+    },
+    {
+      "year": 2022,
+      "month": 12,
+      "year_month": "2022-12",
+      "harmonized_event_count": 581,
+      "raw_detection_count": 937,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 40,
+        "VIIRS": 897
+      },
+      "overlap_events": 20,
+      "overlap_share": 0.034,
+      "median_frp_mw": 2.71,
+      "climatology_mean": 607.3,
+      "climatology_std": 129.7,
+      "anomaly_z": -0.2,
+      "critical": false
+    },
+    {
+      "year": 2023,
+      "month": 1,
+      "year_month": "2023-01",
+      "harmonized_event_count": 582,
+      "raw_detection_count": 854,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 55,
+        "VIIRS": 799
+      },
+      "overlap_events": 22,
+      "overlap_share": 0.038,
+      "median_frp_mw": 2.79,
+      "climatology_mean": 589.3,
+      "climatology_std": 261.4,
+      "anomaly_z": -0.03,
+      "critical": false
+    },
+    {
+      "year": 2023,
+      "month": 2,
+      "year_month": "2023-02",
+      "harmonized_event_count": 620,
+      "raw_detection_count": 989,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 78,
+        "VIIRS": 911
+      },
+      "overlap_events": 26,
+      "overlap_share": 0.042,
+      "median_frp_mw": 3.27,
+      "climatology_mean": 509.5,
+      "climatology_std": 120.2,
+      "anomaly_z": 0.92,
+      "critical": false
+    },
+    {
+      "year": 2023,
+      "month": 3,
+      "year_month": "2023-03",
+      "harmonized_event_count": 1804,
+      "raw_detection_count": 3320,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 257,
+        "VIIRS": 3063
+      },
+      "overlap_events": 104,
+      "overlap_share": 0.058,
+      "median_frp_mw": 3.9,
+      "climatology_mean": 2373.5,
+      "climatology_std": 1342.8,
+      "anomaly_z": -0.42,
+      "critical": false
+    },
+    {
+      "year": 2023,
+      "month": 4,
+      "year_month": "2023-04",
+      "harmonized_event_count": 4746,
+      "raw_detection_count": 18685,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 2099,
+        "VIIRS": 16586
+      },
+      "overlap_events": 747,
+      "overlap_share": 0.157,
+      "median_frp_mw": 7.37,
+      "climatology_mean": 3887.8,
+      "climatology_std": 689.1,
+      "anomaly_z": 1.25,
+      "critical": true
+    },
+    {
+      "year": 2023,
+      "month": 5,
+      "year_month": "2023-05",
+      "harmonized_event_count": 507,
+      "raw_detection_count": 858,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 63,
+        "VIIRS": 795
+      },
+      "overlap_events": 21,
+      "overlap_share": 0.041,
+      "median_frp_mw": 4.02,
+      "climatology_mean": 310.7,
+      "climatology_std": 145.5,
+      "anomaly_z": 1.35,
+      "critical": true
+    },
+    {
+      "year": 2023,
+      "month": 6,
+      "year_month": "2023-06",
+      "harmonized_event_count": 83,
+      "raw_detection_count": 117,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 4,
+        "VIIRS": 113
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 3.06,
+      "climatology_mean": 38.5,
+      "climatology_std": 24.7,
+      "anomaly_z": 1.8,
+      "critical": true
+    },
+    {
+      "year": 2023,
+      "month": 7,
+      "year_month": "2023-07",
+      "harmonized_event_count": 38,
+      "raw_detection_count": 65,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 13,
+        "VIIRS": 52
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 3.41,
+      "climatology_mean": 21.5,
+      "climatology_std": 12.8,
+      "anomaly_z": 1.29,
+      "critical": true
+    },
+    {
+      "year": 2023,
+      "month": 8,
+      "year_month": "2023-08",
+      "harmonized_event_count": 12,
+      "raw_detection_count": 22,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 7,
+        "VIIRS": 15
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 5.4,
+      "climatology_mean": 22.2,
+      "climatology_std": 8.2,
+      "anomaly_z": -1.24,
+      "critical": false
+    },
+    {
+      "year": 2023,
+      "month": 9,
+      "year_month": "2023-09",
+      "harmonized_event_count": 32,
+      "raw_detection_count": 60,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 6,
+        "VIIRS": 54
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 1.69,
+      "climatology_mean": 27.5,
+      "climatology_std": 3.7,
+      "anomaly_z": 1.21,
+      "critical": true
+    },
+    {
+      "year": 2023,
+      "month": 10,
+      "year_month": "2023-10",
+      "harmonized_event_count": 87,
+      "raw_detection_count": 219,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 10,
+        "VIIRS": 209
+      },
+      "overlap_events": 2,
+      "overlap_share": 0.023,
+      "median_frp_mw": 1.88,
+      "climatology_mean": 58.3,
+      "climatology_std": 18.9,
+      "anomaly_z": 1.51,
+      "critical": true
+    },
+    {
+      "year": 2023,
+      "month": 11,
+      "year_month": "2023-11",
+      "harmonized_event_count": 315,
+      "raw_detection_count": 506,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 19,
+        "VIIRS": 487
+      },
+      "overlap_events": 6,
+      "overlap_share": 0.019,
+      "median_frp_mw": 2.97,
+      "climatology_mean": 293.2,
+      "climatology_std": 74.0,
+      "anomaly_z": 0.29,
+      "critical": false
+    },
+    {
+      "year": 2023,
+      "month": 12,
+      "year_month": "2023-12",
+      "harmonized_event_count": 403,
+      "raw_detection_count": 544,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 22,
+        "VIIRS": 522
+      },
+      "overlap_events": 6,
+      "overlap_share": 0.015,
+      "median_frp_mw": 2.76,
+      "climatology_mean": 607.3,
+      "climatology_std": 129.7,
+      "anomaly_z": -1.57,
+      "critical": false
+    },
+    {
+      "year": 2024,
+      "month": 1,
+      "year_month": "2024-01",
+      "harmonized_event_count": 357,
+      "raw_detection_count": 573,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 19,
+        "VIIRS": 554
+      },
+      "overlap_events": 3,
+      "overlap_share": 0.008,
+      "median_frp_mw": 2.55,
+      "climatology_mean": 589.3,
+      "climatology_std": 261.4,
+      "anomaly_z": -0.89,
+      "critical": false
+    },
+    {
+      "year": 2024,
+      "month": 2,
+      "year_month": "2024-02",
+      "harmonized_event_count": 329,
+      "raw_detection_count": 552,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 46,
+        "VIIRS": 506
+      },
+      "overlap_events": 6,
+      "overlap_share": 0.018,
+      "median_frp_mw": 2.93,
+      "climatology_mean": 509.5,
+      "climatology_std": 120.2,
+      "anomaly_z": -1.5,
+      "critical": false
+    },
+    {
+      "year": 2024,
+      "month": 3,
+      "year_month": "2024-03",
+      "harmonized_event_count": 821,
+      "raw_detection_count": 1468,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 141,
+        "VIIRS": 1327
+      },
+      "overlap_events": 47,
+      "overlap_share": 0.057,
+      "median_frp_mw": 3.66,
+      "climatology_mean": 2373.5,
+      "climatology_std": 1342.8,
+      "anomaly_z": -1.16,
+      "critical": false
+    },
+    {
+      "year": 2024,
+      "month": 4,
+      "year_month": "2024-04",
+      "harmonized_event_count": 4212,
+      "raw_detection_count": 13360,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1536,
+        "VIIRS": 11824
+      },
+      "overlap_events": 501,
+      "overlap_share": 0.119,
+      "median_frp_mw": 6.89,
+      "climatology_mean": 3887.8,
+      "climatology_std": 689.1,
+      "anomaly_z": 0.47,
+      "critical": false
+    },
+    {
+      "year": 2024,
+      "month": 5,
+      "year_month": "2024-05",
+      "harmonized_event_count": 351,
+      "raw_detection_count": 519,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 45,
+        "VIIRS": 474
+      },
+      "overlap_events": 10,
+      "overlap_share": 0.028,
+      "median_frp_mw": 4.36,
+      "climatology_mean": 310.7,
+      "climatology_std": 145.5,
+      "anomaly_z": 0.28,
+      "critical": false
+    },
+    {
+      "year": 2024,
+      "month": 6,
+      "year_month": "2024-06",
+      "harmonized_event_count": 18,
+      "raw_detection_count": 28,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 8,
+        "VIIRS": 20
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 3.95,
+      "climatology_mean": 38.5,
+      "climatology_std": 24.7,
+      "anomaly_z": -0.83,
+      "critical": false
+    },
+    {
+      "year": 2024,
+      "month": 7,
+      "year_month": "2024-07",
+      "harmonized_event_count": 13,
+      "raw_detection_count": 23,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 4,
+        "VIIRS": 19
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 7.7,
+      "climatology_mean": 21.5,
+      "climatology_std": 12.8,
+      "anomaly_z": -0.66,
+      "critical": false
+    },
+    {
+      "year": 2024,
+      "month": 8,
+      "year_month": "2024-08",
+      "harmonized_event_count": 26,
+      "raw_detection_count": 62,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 9,
+        "VIIRS": 53
+      },
+      "overlap_events": 1,
+      "overlap_share": 0.038,
+      "median_frp_mw": 4.85,
+      "climatology_mean": 22.2,
+      "climatology_std": 8.2,
+      "anomaly_z": 0.47,
+      "critical": false
+    },
+    {
+      "year": 2024,
+      "month": 9,
+      "year_month": "2024-09",
+      "harmonized_event_count": 26,
+      "raw_detection_count": 43,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 10,
+        "VIIRS": 33
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 3.05,
+      "climatology_mean": 27.5,
+      "climatology_std": 3.7,
+      "anomaly_z": -0.4,
+      "critical": false
+    },
+    {
+      "year": 2024,
+      "month": 10,
+      "year_month": "2024-10",
+      "harmonized_event_count": 32,
+      "raw_detection_count": 76,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 1,
+        "VIIRS": 75
+      },
+      "overlap_events": 0,
+      "overlap_share": 0.0,
+      "median_frp_mw": 1.82,
+      "climatology_mean": 58.3,
+      "climatology_std": 18.9,
+      "anomaly_z": -1.39,
+      "critical": false
+    },
+    {
+      "year": 2024,
+      "month": 11,
+      "year_month": "2024-11",
+      "harmonized_event_count": 223,
+      "raw_detection_count": 358,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 13,
+        "VIIRS": 345
+      },
+      "overlap_events": 2,
+      "overlap_share": 0.009,
+      "median_frp_mw": 2.72,
+      "climatology_mean": 293.2,
+      "climatology_std": 74.0,
+      "anomaly_z": -0.95,
+      "critical": false
+    },
+    {
+      "year": 2024,
+      "month": 12,
+      "year_month": "2024-12",
+      "harmonized_event_count": 617,
+      "raw_detection_count": 945,
+      "raw_detection_count_by_sensor": {
+        "MODIS": 44,
+        "VIIRS": 901
+      },
+      "overlap_events": 13,
+      "overlap_share": 0.021,
+      "median_frp_mw": 2.78,
+      "climatology_mean": 607.3,
+      "climatology_std": 129.7,
+      "anomaly_z": 0.07,
+      "critical": false
+    }
+  ],
+  "top_anomalous_months": [
+    {
+      "year_month": "2019-01",
+      "harmonized_event_count": 1097,
+      "climatology_mean": 589.3,
+      "climatology_std": 261.4,
+      "anomaly_z": 1.94,
+      "critical": true,
+      "overlap_share": 0.023
+    },
+    {
+      "year_month": "2023-06",
+      "harmonized_event_count": 83,
+      "climatology_mean": 38.5,
+      "climatology_std": 24.7,
+      "anomaly_z": 1.8,
+      "critical": true,
+      "overlap_share": 0.0
+    },
+    {
+      "year_month": "2021-11",
+      "harmonized_event_count": 419,
+      "climatology_mean": 293.2,
+      "climatology_std": 74.0,
+      "anomaly_z": 1.7,
+      "critical": true,
+      "overlap_share": 0.043
+    },
+    {
+      "year_month": "2019-08",
+      "harmonized_event_count": 35,
+      "climatology_mean": 22.2,
+      "climatology_std": 8.2,
+      "anomaly_z": 1.56,
+      "critical": true,
+      "overlap_share": 0.029
+    },
+    {
+      "year_month": "2023-10",
+      "harmonized_event_count": 87,
+      "climatology_mean": 58.3,
+      "climatology_std": 18.9,
+      "anomaly_z": 1.51,
+      "critical": true,
+      "overlap_share": 0.023
+    }
+  ],
+  "critical_months": [
+    "2019-01",
+    "2019-03",
+    "2019-08",
+    "2020-02",
+    "2021-11",
+    "2021-12",
+    "2022-07",
+    "2023-04",
+    "2023-05",
+    "2023-06",
+    "2023-07",
+    "2023-09",
+    "2023-10"
+  ],
+  "inputs": {
+    "modis/2003": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2003_Bangladesh.csv",
+      "sha256": "1a871a2f940b3a61b7cdcb5f9b5616b14ccf0ac8b85c70abab5e710c854b3298",
+      "rows_read": 2933,
+      "retained": 2933,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2004": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2004_Bangladesh.csv",
+      "sha256": "f3e63656cba518efeb35bc0f546e859d2c94be2186ec1cf0dfeb7996a95ed717",
+      "rows_read": 2923,
+      "retained": 2923,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2005": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2005_Bangladesh.csv",
+      "sha256": "c7bc3be6728b005c74e74cf2689f9f3020155648c81a8505a0e528832cb3414a",
+      "rows_read": 3750,
+      "retained": 3750,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2006": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2006_Bangladesh.csv",
+      "sha256": "e38dfb627ec444e303a3b66dab845c2cee3805059a6f392d4eabea6abe5e6baf",
+      "rows_read": 4113,
+      "retained": 4113,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2007": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2007_Bangladesh.csv",
+      "sha256": "c83d7c2a626c1e977d4187117633387e4656531e64f5ae86b3f5d16366c4a19b",
+      "rows_read": 3961,
+      "retained": 3961,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2008": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2008_Bangladesh.csv",
+      "sha256": "74d00b2ae02a6990c180fb48c2b657783273da16c98e288ce1d2e756998692e2",
+      "rows_read": 2906,
+      "retained": 2906,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2009": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2009_Bangladesh.csv",
+      "sha256": "51f0f237b21e0a79afc96329fd168c7fc71d87784585eff5d94d141e18e836f3",
+      "rows_read": 3875,
+      "retained": 3875,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2010": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2010_Bangladesh.csv",
+      "sha256": "1087028296b64c1795eba22f8bba33aa6c163bb669735ac9ab1a5b4b8221abb4",
+      "rows_read": 2825,
+      "retained": 2825,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2011": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2011_Bangladesh.csv",
+      "sha256": "70cc964519e0d02beed31f97db9566afea8449e87510d445c89f24dea8177667",
+      "rows_read": 2667,
+      "retained": 2667,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2012": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2012_Bangladesh.csv",
+      "sha256": "d8f5df0b45a19e74ca1f920c6786dd33f649465fe4f9417e3a209c067cfc1fbc",
+      "rows_read": 3251,
+      "retained": 3251,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2013": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2013_Bangladesh.csv",
+      "sha256": "411d38e5ecdb8dda86f149762b01ea06331139590fe03509608c46f411e9cb17",
+      "rows_read": 2933,
+      "retained": 2933,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2014": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2014_Bangladesh.csv",
+      "sha256": "313ff6e82c84ce857772cb2d70b3c5651396602a594ecc15c62ef4ad9808fb3e",
+      "rows_read": 2818,
+      "retained": 2818,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2015": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2015_Bangladesh.csv",
+      "sha256": "7316ca068c0e7946e65299833aaf831b5bd85818df7947dd55d4db64b172f035",
+      "rows_read": 1588,
+      "retained": 1588,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2016": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2016_Bangladesh.csv",
+      "sha256": "ae4549158a65547fe0fa0f91801398e63ef9a780fb5ac7e8257fd6349e03428a",
+      "rows_read": 1852,
+      "retained": 1852,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2017": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2017_Bangladesh.csv",
+      "sha256": "f71eea6dfe00ec9e1b89c7e05cf1494db0c9aee6129d9a099b87f1d43498ef84",
+      "rows_read": 1468,
+      "retained": 1468,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2018": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2018_Bangladesh.csv",
+      "sha256": "36eed0391d095a95083204a57809dc300cbe909e930851d3a1e7ae45a5e5e61f",
+      "rows_read": 2289,
+      "retained": 2289,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2019": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2019_Bangladesh.csv",
+      "sha256": "d560b60a6885fd5c27c639d9b283d897b38b2cbaf316ce22c646a0d25fb4112d",
+      "rows_read": 2719,
+      "retained": 2719,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2020": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2020_Bangladesh.csv",
+      "sha256": "c172744cb845c4cee8c2ce0dc03b7bdf8541212852ecb24c4e97539156e521f2",
+      "rows_read": 2903,
+      "retained": 2903,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2021": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2021_Bangladesh.csv",
+      "sha256": "3963c05c881a0b762d5321a55645ed12c0ab6ae1a4f2b1b2924520f8dc1d8a6e",
+      "rows_read": 2895,
+      "retained": 2895,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2022": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2022_Bangladesh.csv",
+      "sha256": "9b0c04c4ae98905f0901fa9685a1cd647f6b6e1dc8a39da2de8e62ce8cc2bb51",
+      "rows_read": 963,
+      "retained": 963,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2023": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2023_Bangladesh.csv",
+      "sha256": "d604a379007613caffb1578f6d370307c026645911c3d241a09eb0edde535e8b",
+      "rows_read": 2633,
+      "retained": 2633,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "modis/2024": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/modis_2024_Bangladesh.csv",
+      "sha256": "5eb40a73615d18b1899a0ed3884e6e40005c3ebc3b0d0b1dd484bf778a4788c4",
+      "rows_read": 1876,
+      "retained": 1876,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-jpss1/2019": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-jpss1_2019_Bangladesh.csv",
+      "sha256": "ef0fb28b091cebf203bb39efe49de228704623d21ef2f5a205a83f2b7a9f8959",
+      "rows_read": 11435,
+      "retained": 11435,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-jpss1/2020": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-jpss1_2020_Bangladesh.csv",
+      "sha256": "81d7eae529c77849deec42ede9b1f1dc003aee991feeb6c2de5eeb8be923fd3f",
+      "rows_read": 10844,
+      "retained": 10844,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-jpss1/2021": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-jpss1_2021_Bangladesh.csv",
+      "sha256": "4437aa737158dbb009122082cda848aaaba317196da1546de333234c38029792",
+      "rows_read": 12008,
+      "retained": 12008,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-jpss1/2022": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-jpss1_2022_Bangladesh.csv",
+      "sha256": "98c92996562fe74827178e8bbfe3270c494219a5d0f68d5a0a87eae3bb208b00",
+      "rows_read": 7671,
+      "retained": 7671,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-jpss1/2023": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-jpss1_2023_Bangladesh.csv",
+      "sha256": "f436ba18ed630a04a2871b90b403cdd91378f9c80d357c6ba8c990c9f828f223",
+      "rows_read": 11906,
+      "retained": 11906,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-jpss1/2024": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-jpss1_2024_Bangladesh.csv",
+      "sha256": "a3e8aaecfcdf966890d89893db5ae18aadbaf9a2cf8c17e8688063ec6330ff2a",
+      "rows_read": 8048,
+      "retained": 8048,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-snpp/2013": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-snpp_2013_Bangladesh.csv",
+      "sha256": "5ba15f7edfa584daf1964ba474950138774070c698025aeb7346e6cde14317e6",
+      "rows_read": 12854,
+      "retained": 12854,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-snpp/2014": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-snpp_2014_Bangladesh.csv",
+      "sha256": "2163beea15209aee9fcaa6ea72362ff4a0ce12cc55e7ae74410d68d5e0bd83c3",
+      "rows_read": 15428,
+      "retained": 15428,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-snpp/2015": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-snpp_2015_Bangladesh.csv",
+      "sha256": "681a86cf83324531afc27177207bb0cf0897e7bf352f349e701adebee2648d61",
+      "rows_read": 8632,
+      "retained": 8632,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-snpp/2016": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-snpp_2016_Bangladesh.csv",
+      "sha256": "d125f8d78bf80044ebcb4d30a950f8db4cf177400584ece0b4bb16a232529dc6",
+      "rows_read": 7604,
+      "retained": 7604,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-snpp/2017": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-snpp_2017_Bangladesh.csv",
+      "sha256": "cc4f99027840800e2f2f332c88194a3044d1dce62742dd323df7890bbfa55067",
+      "rows_read": 6736,
+      "retained": 6736,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-snpp/2018": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-snpp_2018_Bangladesh.csv",
+      "sha256": "3b78cc37ac9145551a14357888edbffb1cfba3312abbb627bc6faeca73563ba5",
+      "rows_read": 9448,
+      "retained": 9448,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-snpp/2019": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-snpp_2019_Bangladesh.csv",
+      "sha256": "59bd07f3eb6a2f1d32245f4381ca3a78422b6dff4bdec144af2dd5b327215fbb",
+      "rows_read": 11048,
+      "retained": 11048,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-snpp/2020": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-snpp_2020_Bangladesh.csv",
+      "sha256": "ff302bd1dacf15a52f334fa3b87c211fbfda3f84db4de4ec0b23abbc7a724c68",
+      "rows_read": 11215,
+      "retained": 11215,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-snpp/2021": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-snpp_2021_Bangladesh.csv",
+      "sha256": "af94815f9e7cae768954eade90eb944dd849af56724e01ae619a28540769ebf8",
+      "rows_read": 12249,
+      "retained": 12249,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-snpp/2022": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-snpp_2022_Bangladesh.csv",
+      "sha256": "84ab0ae739b5b07b443b96129d65d23e07cdf7dac0ee7f418099db0d10b2e5a6",
+      "rows_read": 7258,
+      "retained": 7258,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-snpp/2023": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-snpp_2023_Bangladesh.csv",
+      "sha256": "a3bc542d5da30b67fe76b7435760c0578ad48f5449fe45c4abcd04d716818f8f",
+      "rows_read": 11700,
+      "retained": 11700,
+      "invalid": 0,
+      "exact_duplicates": 0
+    },
+    "viirs-snpp/2024": {
+      "file": "/home/hatch/workspace/space-apps-agni/AgniCalender/backend/data/raw/viirs-snpp_2024_Bangladesh.csv",
+      "sha256": "529d46bcb849dbc6b1056be8d97cd39cc67e2b30f0cd1796b7fd29dbf447ddc6",
+      "rows_read": 8083,
+      "retained": 8083,
+      "invalid": 0,
+      "exact_duplicates": 0
+    }
+  },
+  "unavailable": []
+}

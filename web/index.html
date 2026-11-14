@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgniCalendar — Harmonized Burning Activity Calendar for Bangladesh</title>
+<meta name="description" content="NASA Space Apps Challenge 2026 — Harmonization of MODIS and VIIRS Hot Spots. One harmonized burning activity calendar for Bangladesh, 2003–2024, from real NASA FIRMS data. No login required.">
+<style>
+  :root{--bg:#fff8f0;--ink:#1f1a17;--muted:#6b5d54;--fire:#c2410c;--fire2:#ea580c;--card:#fff;--line:#ead9c8;--ok:#166534}
+  *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+  header{background:#1f1a17;color:#fff;padding:28px 20px 22px} header .wrap,main,footer .wrap{max-width:1080px;margin:0 auto}
+  h1{margin:0 0 6px;font-size:clamp(26px,4vw,40px);line-height:1.1} h1 span{color:#fb923c}
+  .sub{color:#fcd9b8;max-width:760px;margin:0} .pill{display:inline-block;background:#c2410c;color:#fff;border-radius:999px;padding:3px 10px;font-size:13px;margin:0 6px 8px 0}
+  main{padding:20px} section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:0 0 16px}
+  h2{margin:0 0 8px;font-size:22px} h3{margin:18px 0 6px} p{margin:8px 0} .muted{color:var(--muted)} .small{font-size:13px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:12px 0}
+  .stat{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fffdf9} .stat b{font-size:28px;display:block;line-height:1.1} .stat span{color:var(--muted);font-size:13px}
+  .stat .big{color:var(--fire)}
+  table{border-collapse:collapse;width:100%;font-size:14px} th,td{border:1px solid var(--line);padding:6px 8px;text-align:left} th{background:#fff1e6}
+  .heat{overflow-x:auto} .heat table{font-size:12px;min-width:760px} .heat td{text-align:center;font-weight:600;color:#1f1a17}
+  .heat td.yr,.heat th{text-align:left;font-weight:700} .crit{outline:3px solid #111;outline-offset:-3px}
+  .legend{font-size:13px;color:var(--muted)} .bar-row{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:13px}
+  .bar-row .lbl{width:52px;text-align:right} .bar{height:18px;background:linear-gradient(90deg,#fdba74,#c2410c);border-radius:4px;min-width:2px}
+  .bar.raw{background:#d6d3d1} .bar-row .val{color:var(--muted)}
+  .callout{border-left:5px solid var(--fire);background:#fff1e6;padding:12px 14px;border-radius:0 10px 10px 0}
+  .btn{display:inline-block;background:var(--fire);color:#fff;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:700;margin:4px 6px 4px 0}
+  .btn.ghost{background:#fff;color:var(--fire);border:2px solid var(--fire)}
+  code{background:#f5efe8;padding:1px 5px;border-radius:5px} pre{background:#1f1a17;color:#fde68a;padding:12px;border-radius:10px;overflow-x:auto;font-size:13px}
+  footer{padding:10px 20px 30px;color:var(--muted);font-size:13px}
+  #status{padding:12px;border-radius:10px;background:#fef3c7}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <span class="pill">NASA Space Apps Challenge 2026</span><span class="pill">Harmonization of MODIS and VIIRS Hot Spots</span><span class="pill">Bangladesh</span>
+  <h1>AgniCalendar <span>— one fire calendar, not three sensor counts</span></h1>
+  <p class="sub">MODIS and VIIRS have watched Bangladesh burn for 20+ years, but the same fire was counted 2–5 times — once per satellite, once per pixel. AgniCalendar merges those repeat detections into one harmonized fire event, so March–April really can be compared with March–April, year after year.</p>
+  <p style="margin-top:14px"><a class="btn" href="#calendar">See the harmonized calendar ↓</a><a class="btn ghost" href="#critical" style="color:#fff;border-color:#fff">Critical periods</a></p>
+</div></header>
+<main>
+  <div id="status">Loading real harmonized data from <code>data/harmonized.json</code>… If you opened this file directly, serve it instead: <code>python3 -m http.server</code> in the <code>web/</code> folder, then open <code>http://localhost:8000</code>.</div>
+
+  <section id="headline" hidden>
+    <h2>The headline, in one line</h2>
+    <div class="stats" id="stats"></div>
+    <p id="headline-text"></p>
+    <div class="callout"><b>What “harmonized” means here:</b> vegetation detections (NASA FIRMS type 0) on the same UTC date whose centres are within <b>1.0 km</b> belong to one fire event, regardless of sensor. FRP is never summed across sensors — MODIS pixels are ~1 km, VIIRS pixels ~375 m, so summing would double-count the same fire.</div>
+  </section>
+
+  <section id="calendar" hidden>
+    <h2>Harmonized burning activity calendar — events per month</h2>
+    <p class="muted">Each cell is a <b>harmonized fire event</b>, not a raw pixel count. Darker = more burning. <span style="outline:3px solid #111;padding:0 4px">Outlined</span> = critical month: more events than that month’s 2019–2024 average + 1 standard deviation. Anomalies are only shown for 2019–2024, when all three sensors were flying — earlier years get no anomaly rather than a misleading one.</p>
+    <div class="heat" id="heatmap"></div>
+    <p class="legend">Peak month in every one of the 22 years is March or April. The burning season is March–April; June–October is usually quiet — so a high June or October is unusual even when its absolute count is small.</p>
+    <h3>Raw detections vs harmonized events, by year</h3>
+    <p class="muted small">Grey = raw FIRMS detections (the old way — the same fire counted many times). Orange = harmonized events (the calendar above). The gap is the double-counting this project removes. Yearly totals jump when VIIRS arrives (2013, 2019) because VIIRS sees smaller fires MODIS misses — that is sensor sensitivity, not proof burning increased.</p>
+    <div id="yearbars"></div>
+  </section>
+
+  <section id="critical" hidden>
+    <h2>Critical periods — unusual months worth a closer look</h2>
+    <p class="muted">Anomaly z = (events − monthly average 2019–2024) ÷ standard deviation. “Critical” means events &gt; average + 1 SD. Treat it as a flag for responders to check, not a verified emergency — with only 6 climatology years, the standard deviation itself is uncertain.</p>
+    <div id="critical-table"></div>
+    <h3>When to watch</h3>
+    <p id="season-text"></p>
+  </section>
+
+  <section>
+    <h2>How a responder / land manager would use this</h2>
+    <ol>
+      <li><b>Before the season:</b> look at March–April in the calendar — that is when Bangladesh burns, every year.</li>
+      <li><b>During the season:</b> compare this month’s harmonized events with the same month’s 2019–2024 average. Above average + 1 SD = critical, check it.</li>
+      <li><b>After the season:</b> do not compare a MODIS-only year (2003–2012) directly with a VIIRS year — the sensors see different fires. Compare within the same sensor era, or use the harmonized events.</li>
+    </ol>
+    <p><a class="btn" href="https://github.com/mdtanzimulislamrefat/AgniCalender" target="_blank" rel="noopener">Full code on GitHub ↗</a><a class="btn ghost" href="../backend/data/output/HARMONIZATION_METHOD.md">Method note</a></p>
+    <p class="muted small">The Android app and FastAPI backend are in the same repository (<code>app/</code> and <code>backend/</code>). This web page needs no login, no server and no APK — it reads the precomputed harmonized calendar. The API also serves it at <code>GET /v1/harmonized/calendar</code>.</p>
+  </section>
+
+  <section>
+    <h2>Method &amp; limitations — read before you quote a number</h2>
+    <ul>
+      <li><b>Data:</b> NASA FIRMS yearly country files for Bangladesh — MODIS 2003–2024, VIIRS S-NPP 2013–2024, VIIRS NOAA-20 2019–2024. 40 files, 0 unavailable, 0 invalid rows. 2025–2026 yearly files are not published yet, so they are not in this calendar.</li>
+      <li><b>Only vegetation fires</b> (FIRMS type 0) are harmonized. Static land sources (5,336), offshore (1,107) and volcano (0) are counted separately, never silently dropped.</li>
+      <li><b>Detections are pixels, not fires.</b> 1 km / 1 UTC-day clustering is an approximation: a large fire can span several events, two nearby fires can merge, and a fire burning across midnight UTC is split in two.</li>
+      <li><b>Harmonized counts are still a lower bound</b> — VIIRS sees smaller/cooler fires MODIS misses, and clouds, smoke and overpass timing leave gaps. A month with no detections is not evidence of no fire.</li>
+      <li><b>No cross-sensor FRP calibration is claimed.</b> FRP is reported per sensor, never summed.</li>
+      <li>Reproduce it: <code>python -m backend.processing.harmonize --years 2003-2024 --products modis,viirs-snpp,viirs-jpss1</code></li>
+    </ul>
+    <p class="small muted">Sources: NASA FIRMS archive (firms.modaps.eosdis.nasa.gov/download/) and FIRMS API. Bangladesh boundary: Natural Earth 1:10m Admin 0 (public domain). Map data in the Android app: © OpenStreetMap contributors. This project uses NASA open data; it is not affiliated with or endorsed by NASA.</p>
+  </section>
+</main>
+<footer><div class="wrap">AgniCalendar — NASA Space Apps Challenge 2026, “Harmonization of MODIS and VIIRS Hot Spots”. Team: see the project submission page. Data: NASA FIRMS. <span id="generated"></span></div></footer>
+<script>
+async function main(){
+  let d;
+  try{ const r=await fetch('data/harmonized.json'); if(!r.ok) throw new Error(r.status); d=await r.json(); }
+  catch(e){ document.getElementById('status').innerHTML='<b>Could not load data/harmonized.json.</b> Serve this folder with <code>python3 -m http.server</code> and reload, or open it via GitHub Pages. Error: '+e.message; return; }
+  document.getElementById('status').remove();
+  for(const id of ['headline','calendar','critical']) document.getElementById(id).hidden=false;
+  const t=d.totals, months=d.monthly, names=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const fmt=n=>n.toLocaleString('en-US');
+  document.getElementById('stats').innerHTML=[
+    [fmt(t.raw_detections),'raw FIRMS detections<br>2003–2024'],
+    [fmt(t.harmonized_events),'harmonized fire events<br>after 1 km / 1-day merging'],
+    [t.deduplication_ratio.toFixed(2)+'×','raw detections per event<br>'+fmt(t.detections_removed_by_dedup)+' merged away'],
+    [fmt(t.peak_month_events),'events in the peak month<br>'+t.peak_month+' (April)'],
+    [(t.overlap_share*100).toFixed(1)+'%','events seen by &gt;1 sensor<br>'+fmt(t.overlap_events)+' cross-checked events'],
+    [t.viirs_modis_raw_ratio.toFixed(2)+' : 1','VIIRS : MODIS raw ratio<br>why raw counts can’t be compared']
+  ].map(([b,s])=>`<div class="stat"><b class="big">${b}</b><span>${s}</span></div>`).join('');
+  document.getElementById('headline-text').innerHTML=`From <b>${fmt(t.raw_detections)}</b> raw detections, AgniCalendar produces <b>${fmt(t.harmonized_events)}</b> harmonized events for Bangladesh, 2003–2024. VIIRS alone reports <b>${t.viirs_modis_raw_ratio.toFixed(2)}×</b> as many detections as MODIS — not because there are 3× as many fires, but because its 375 m pixels see smaller fires. Counting pixels therefore exaggerates burning whenever a new sensor arrives. Merging same-day detections within 1 km removes that double-counting.`;
+  document.getElementById('generated').textContent='Generated '+d.generated_at_utc+' (UTC).';
+  // Heatmap
+  const years=[...new Set(months.map(m=>m.year))].sort((a,b)=>a-b);
+  const maxEv=Math.max(...months.map(m=>m.harmonized_event_count));
+  const byKey={}; months.forEach(m=>byKey[m.year_month]=m);
+  let h='<table><tr><th>Year</th>'+names.map(n=>`<th>${n}</th>`).join('')+'<th>Total</th></tr>';
+  for(const y of years){
+    let tot=0; h+=`<tr><td class="yr">${y}</td>`;
+    for(let mo=1;mo<=12;mo++){
+      const m=byKey[`${y}-${String(mo).padStart(2,'0')}`]; const v=m?m.harmonized_event_count:0; tot+=v;
+      const a=v/maxEv; const bg=`rgba(194,65,12,${(0.06+a*0.88).toFixed(2)})`; const col=a>0.45?'#fff':'#1f1a17';
+      const crit=m&&m.critical?' crit':'';
+      h+=`<td class="${crit}" style="background:${bg};color:${col}" title="${y}-${names[mo-1]}: ${fmt(v)} events${m&&m.anomaly_z!=null?`, z ${m.anomaly_z.toFixed(2)}`:''}">${fmt(v)}</td>`;
+    }
+    h+=`<td><b>${fmt(tot)}</b></td></tr>`;
+  }
+  h+='</table>'; document.getElementById('heatmap').innerHTML=h;
+  // Year bars
+  const byYear={}; months.forEach(m=>{byYear[m.year]=byYear[m.year]||{e:0,r:0}; byYear[m.year].e+=m.harmonized_event_count; byYear[m.year].r+=m.raw_detection_count;});
+  const maxR=Math.max(...Object.values(byYear).map(v=>v.r));
+  document.getElementById('yearbars').innerHTML=Object.keys(byYear).sort().map(y=>{
+    const v=byYear[y];
+    return `<div class="bar-row"><span class="lbl">${y}</span><div class="bar raw" style="width:${(v.r/maxR*100).toFixed(1)}%"></div><span class="val">${fmt(v.r)} raw</span></div>
+    <div class="bar-row"><span class="lbl"></span><div class="bar" style="width:${(v.e/maxR*100).toFixed(1)}%"></div><span class="val">${fmt(v.e)} harmonized</span></div>`;
+  }).join('');
+  // Critical table
+  const crit=d.top_anomalous_months;
+  document.getElementById('critical-table').innerHTML='<table><tr><th>Month</th><th>Events</th><th>Same-month average (2019–24)</th><th>Std</th><th>Anomaly z</th></tr>'+
+    crit.map(m=>`<tr><td><b>${m.year_month}</b></td><td>${fmt(m.harmonized_event_count)}</td><td>${m.climatology_mean.toFixed(1)}</td><td>${m.climatology_std.toFixed(1)}</td><td><b>${m.anomaly_z>=0?'+':''}${m.anomaly_z.toFixed(2)}</b></td></tr>`).join('')+'</table>'+
+    `<p class="small muted">All 13 critical months (2019–2024): ${d.critical_months.join(', ')}. Note June, August and October entries are anomalous <i>for their usually quiet month</i> — small absolute counts, large relative anomaly.</p>`;
+  // Season text from climatology means
+  const clim={}; months.filter(m=>m.climatology_mean!=null).forEach(m=>{clim[m.month]=clim[m.month]||[]; clim[m.month].push(m.climatology_mean);});
+  const avgMo=Object.keys(clim).map(k=>[+k, clim[k][0]]).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('season-text').innerHTML=`On the 2019–2024 climatology, the busiest months are <b>${names[avgMo[0][0]-1]} (${Math.round(avgMo[0][1]).toLocaleString()} events on average)</b> and <b>${names[avgMo[1][0]-1]} (${Math.round(avgMo[1][1]).toLocaleString()})</b>. The quietest are ${names[avgMo[avgMo.length-1][0]-1]} and ${names[avgMo[avgMo.length-2][0]-1]}. Plan extra monitoring for March–April, and treat an out-of-season spike — like June 2023 (83 events vs a 38.5 average, z +1.80) — as unusual even if the number looks small.`;
+}
+main();
+</script>
+</body>
+</html>
